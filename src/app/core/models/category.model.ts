@@ -1,7 +1,15 @@
-export interface Category {
-  id: string;
-  name: string;
-  percentage: number;
-  isLocked: boolean;
-  assignedAmount?: number; // Para que muestre cuánta plata es en pesos
+export interface category {
+    id: string;
+    name: string;
+    percentage: number;
+    isLocked: boolean;
+    assignedAmount?: number;
+    totalAmount?: number;
+}
+
+export interface distributedCategory {
+    id: string;
+    percentage: number;
+    totalAmount?: number;
+    assignedAmount: number;
 }
