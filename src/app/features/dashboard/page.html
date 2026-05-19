@@ -1,0 +1,7 @@
+<div class="h-screen background w-screen font-serif pt-3">
+    <h1 class="text-2xl ml-4 main-title">{{ budgetService.uiConfig()?.appName }}</h1>
+    <div class="flex gap-2 mt-4 ml-7">
+        <app-stat-card type="income" [total]="3000000" [percentageDiff]="12" />
+        <app-stat-card type="expense" [total]="1500000" [percentageDiff]="-8" />
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { Page } from './page/page';
+import { Page } from './features/dashboard/page';
 
 export const routes: Routes = [
   { path: '', component: Page }

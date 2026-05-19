@@ -1,18 +1,32 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Category } from '../models/category.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BudgetService {
-  constructor() {
+  uiConfig = signal<any>(null);
+  constructor(private http: HttpClient) {
     this.testAlgorithm();
   }
+
+  loadJson() {
+    this.http.get('/data/budget.json').subscribe(data => {
+      this.uiConfig.set(data);
+    });
+  }
+
   categories: Category[] = [];
 
   get totalAssigned(): number {
     return this.categories.reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
   }
+  customerName: string = 'Anny Sharidt';
+
+  totalIncome: number = 0;
+  totalExpenses: number = 0;
+  monthlyDifference: number = 0;
 
   get freePercentage(): number {
     return this.categories
