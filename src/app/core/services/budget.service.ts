@@ -23,7 +23,6 @@ export class BudgetService {
     return this.categories.reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
   }
   customerName: string = 'Anny Sharidt';
-
   totalIncome: number = 0;
   totalExpenses: number = 0;
   monthlyDifference: number = 0;

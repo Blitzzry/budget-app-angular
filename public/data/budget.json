@@ -1,4 +1,5 @@
 {
     "welcomeMessage": "Bienvenido a tu aplicación de presupuesto!",
-    "appName": "Budget App"
+    "appName": "Budget App",
+    "totalBalance": "Balance Total"
 }

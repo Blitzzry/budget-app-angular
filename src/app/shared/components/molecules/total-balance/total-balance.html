@@ -1,0 +1,8 @@
+<div class="card p-5 h-full">
+    <div class="flex items-center gap-2">
+    <h1 class="text-lg principal">{{ budgetService.uiConfig()?.totalBalance }}</h1>
+    </div>
+    <h1 class="principal my-2 text-2xl">${{ total | number:'1.2-2'}}</h1>
+    <p class="principal">{{ percentageDiff }}% vs el mes pasado</p>
+    
+</div>
