@@ -25,14 +25,20 @@ export class BudgetService {
   totalIncome: number = 0;
   totalExpenses: number = 0;
   monthlyDifference: number = 0;
-  totalBalanceMock: number = 1228344;
-  get mockCategories(): CategoryInterface[] {
-    return [
-      { id: 1, name: 'Shopping', percentage: 40, isLocked: false, assignedAmount: 0, iconName: 'shopping-cart' as const },
-      { id: 2, name: 'Food', percentage: 10, isLocked: false, assignedAmount: 0, iconName: 'food' as const },
-      { id: 3, name: 'Transport', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
-      { id: 4, name: 'Entertainment', percentage: 30, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const },
-    ].map(cat => ({ ...cat, assignedAmount: (cat.percentage / 100) * this.totalBalanceMock }));
+  totalBalanceMock: number = 1;
+  
+  mockCategories: CategoryInterface[] = [
+    { id: 1, name: 'Shopping', percentage: 40, isLocked: false, assignedAmount: 0, iconName: 'shopping-cart' as const },
+    { id: 2, name: 'Food', percentage: 10, isLocked: false, assignedAmount: 0, iconName: 'food' as const },
+    { id: 3, name: 'Transport', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
+    { id: 4, name: 'Entertainment', percentage: 30, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const },
+    ];
+  
+  updateTotalBalance(newTotal: number) {
+    this.totalBalanceMock = newTotal;
+    this.mockCategories.forEach(cat => {
+      cat.assignedAmount = (cat.percentage / 100) * this.totalBalanceMock;
+    });
   }
 
 categories: CategoryInterface[] = [...this.mockCategories];

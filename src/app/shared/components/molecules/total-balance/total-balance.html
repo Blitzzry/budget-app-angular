@@ -1,7 +1,13 @@
-<div class="card p-5 h-full">
-    <div class="flex items-center gap-2">
-    <h1 class="text-lg principal">{{ budgetService.uiConfig()?.totalBalance }}</h1>
+<div class="card p-5 h-full gap-2 flex flex-col">
+    <div class="flex items-center justify-between">
+        <h1 class="text-lg principal">{{ budgetService.uiConfig()?.totalBalance }}</h1>
+        <div class="flex items-center gap-3">
+        <input [(ngModel)]="total" type=number placeholder="Cantidad" class="principal"/>
+        <button class="button" (click)="budgetService.updateTotalBalance(total)">
+            <app-icon [name]="'pencil-square'" [size]="'xs'"></app-icon>
+        </button>
+        </div>
     </div>
-    <h1 class="principal my-2 text-2xl">${{ total | number:'1.2-2'}}</h1>
+    <h1 class="principal my-2 text-2xl">${{ budgetService.totalBalanceMock | number:'1.2-2'}}</h1>
     <p class="principal">{{ percentageDiff }}% vs el mes pasado</p>
 </div>
