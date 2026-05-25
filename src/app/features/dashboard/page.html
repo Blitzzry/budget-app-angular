@@ -1,7 +1,7 @@
 <div class="h-screen background w-screen font-serif pt-3">
     <h1 class="text-2xl ml-4 main-title">{{ budgetService.uiConfig()?.appName }}</h1>
         <div class="grid grid-cols-4 grid-rows-1 gap-4 mt-4 mx-4">
-        <app-total-balance class="col-span-2 h-full" [total]="3200000" [percentageDiff]="1"/>
+        <app-total-balance class="col-span-2 h-full" [total]="totalBalance" [percentageDiff]="1"/>
         <app-stat-card class="h-full" type="income" [total]="3000000" [percentageDiff]="12" />
         <app-stat-card class="h-full" type="expense" [total]="1500000" [percentageDiff]="-8" />
     </div>

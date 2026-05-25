@@ -8,6 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class Icon {
   constructor() {}
-  @Input() name!: 'arrow-up-circle' | 'arrow-down-circle' | 'plus' | 'shopping-cart' | 'food' | 'transport' | 'entertainment' | 'pencil' | 'trash';
+  @Input() name!: 'lock' | 'arrow-up-circle' | 'arrow-down-circle' | 'plus' | 'shopping-cart' | 'food' | 'transport' | 'entertainment' | 'pencil' | 'trash';
   @Input() size: number = 24;
 }

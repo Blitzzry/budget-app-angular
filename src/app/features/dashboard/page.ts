@@ -15,8 +15,9 @@ import { CategoryCard } from '../../shared/components/molecules/category-card/ca
 })
 export class Page implements OnInit {
   constructor(public budgetService: BudgetService) {}
-
+  totalBalance: number = 0;
   ngOnInit() {
     this.budgetService.loadJson();
+    this.totalBalance = this.budgetService.totalBalanceMock;
   }
 }

@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Icon } from '../../atoms/icon/icon';
 import { Category } from '../../atoms/category/category';
+import { BudgetService } from '../../../../core/services/budget.service';
+import { CategoryInterface } from '../../../../core/models/category.model';
 
 @Component({
   selector: 'app-category-card',
@@ -8,12 +10,14 @@ import { Category } from '../../atoms/category/category';
   templateUrl: './category-card.html',
   styleUrl: './category-card.css',
 })
-export class CategoryCard {
-  constructor() {}
-  exampleCategories : { name: string, icon: 'shopping-cart' | 'food' | 'transport' | 'entertainment' }[]= [
-    { name: 'Shopping', icon: 'shopping-cart' },
-    { name: 'Food', icon: 'food' },
-    { name: 'Transport', icon: 'transport' },
-    { name: 'Entertainment', icon: 'entertainment' },
-  ];
+export class CategoryCard implements OnInit {
+  totalAmount: number = 0;
+  exampleCategories: CategoryInterface[] = [];
+  categoryExample: CategoryInterface = {} as CategoryInterface;
+  constructor(public budgetService: BudgetService) {
+  }
+  ngOnInit(): void {
+    this.categoryExample = this.budgetService.categoryExample;
+    this.exampleCategories = this.budgetService.mockCategories;
+  }
 }

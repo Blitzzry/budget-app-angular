@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Category } from '../models/category.model';
+import { CategoryInterface } from '../models/category.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class BudgetService {
     });
   }
 
-  categories: Category[] = [];
+  categories: CategoryInterface[] = [];
 
   get totalAssigned(): number {
     return this.categories.reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
@@ -26,21 +26,34 @@ export class BudgetService {
   totalIncome: number = 0;
   totalExpenses: number = 0;
   monthlyDifference: number = 0;
+  totalBalanceMock: number = 1228344;
+  get mockCategories(): CategoryInterface[] {
+  return [
+    { id: crypto.randomUUID(), name: 'Shopping', percentage: 40, isLocked: false, iconName: 'shopping-cart' as const },
+    { id: crypto.randomUUID(), name: 'Food', percentage: 10, isLocked: false, iconName: 'food' as const },
+    { id: crypto.randomUUID(), name: 'Transport', percentage: 20, isLocked: false, iconName: 'transport' as const },
+    { id: crypto.randomUUID(), name: 'Entertainment', percentage: 30, isLocked: false, iconName: 'entertainment' as const },
+  ].map(cat => ({
+    ...cat,
+    assignedAmount: this.totalBalanceMock * (cat.percentage / 100)
+  }));
+}
+  categoryExample: CategoryInterface = { id: crypto.randomUUID(), name: 'Entertainment', percentage: 0, isLocked: false, assignedAmount: 0, iconName: 'entertainment' };
+
+  addCategory(category: CategoryInterface) {
+    this.mockCategories.push(this.categoryExample);
+  }
 
   get freePercentage(): number {
     return this.categories
       .filter(cat => !cat.isLocked)
       .reduce((acc, cat) => acc + cat.percentage, 0);
-  }
-  testAlgorithm() {
-    const mockCategories: Category[] = [
-      { id: '1', name: 'Renta', percentage: 40, isLocked: false, assignedAmount: 400 },
-      { id: '2', name: 'Comida', percentage: 10, isLocked: false, assignedAmount: 100 },
-      { id: '3', name: 'Ahorro', percentage: 50, isLocked: true, assignedAmount: 500 }
-    ];
+    }
+    
+    testAlgorithm() {
     
 
-    const distributeBudget = (categories: Category[], amountToDistribute: number): Category[] => {
+    const distributeBudget = (categories: CategoryInterface[], amountToDistribute: number): CategoryInterface[] => {
         for (let category of categories) {
           if (!category.isLocked) {
             category.assignedAmount += this.freePercentage == 0 ? 0 : (category.percentage / this.freePercentage) * amountToDistribute;
@@ -48,7 +61,7 @@ export class BudgetService {
         }
         return categories;
     }
-    const resultado = distributeBudget(mockCategories, 1000); 
+    const resultado = distributeBudget(this.mockCategories, 1000); 
     
     console.table(resultado);
   }

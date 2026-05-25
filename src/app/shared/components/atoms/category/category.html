@@ -2,6 +2,13 @@
     <div class="flex gap-3 items-center">
     <app-icon class="icon" [name]="iconName"/>
     <p class="principal">{{ categoryName }}</p>
+    <span class="percentage principal">{{ percentage }}%</span>
+    @if (assignedAmount > 0) {
+        <p class="assigned-amount principal">${{ assignedAmount | number:'1.2-2' }}</p>
+    }
+    @if (isLocked) {
+       <app-icon class="icon" [name]="'lock'"/>
+   }
     </div>
     <div class="flex gap-3 items-center">
     <button>

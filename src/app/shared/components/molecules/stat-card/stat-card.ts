@@ -1,7 +1,7 @@
 import { Component, Input} from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { BudgetService } from '../../../../core/services/budget.service';
-import { Category } from '../../../../core/models/category.model';
+import { CategoryInterface } from '../../../../core/models/category.model';
 import { Icon } from '../../atoms/icon/icon';
 
 @Component({
