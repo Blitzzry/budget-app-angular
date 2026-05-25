@@ -1,5 +1,5 @@
 export interface CategoryInterface {
-    id: string;
+    id: string | number;
     name: string;
     percentage: number;
     isLocked: boolean;

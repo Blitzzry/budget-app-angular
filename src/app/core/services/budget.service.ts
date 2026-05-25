@@ -17,8 +17,7 @@ export class BudgetService {
     });
   }
 
-  categories: CategoryInterface[] = [];
-
+  
   get totalAssigned(): number {
     return this.categories.reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
   }
@@ -28,20 +27,18 @@ export class BudgetService {
   monthlyDifference: number = 0;
   totalBalanceMock: number = 1228344;
   get mockCategories(): CategoryInterface[] {
-  return [
-    { id: crypto.randomUUID(), name: 'Shopping', percentage: 40, isLocked: false, iconName: 'shopping-cart' as const },
-    { id: crypto.randomUUID(), name: 'Food', percentage: 10, isLocked: false, iconName: 'food' as const },
-    { id: crypto.randomUUID(), name: 'Transport', percentage: 20, isLocked: false, iconName: 'transport' as const },
-    { id: crypto.randomUUID(), name: 'Entertainment', percentage: 30, isLocked: false, iconName: 'entertainment' as const },
-  ].map(cat => ({
-    ...cat,
-    assignedAmount: this.totalBalanceMock * (cat.percentage / 100)
-  }));
-}
-  categoryExample: CategoryInterface = { id: crypto.randomUUID(), name: 'Entertainment', percentage: 0, isLocked: false, assignedAmount: 0, iconName: 'entertainment' };
+    return [
+      { id: 1, name: 'Shopping', percentage: 40, isLocked: false, assignedAmount: 0, iconName: 'shopping-cart' as const },
+      { id: 2, name: 'Food', percentage: 10, isLocked: false, assignedAmount: 0, iconName: 'food' as const },
+      { id: 3, name: 'Transport', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
+      { id: 4, name: 'Entertainment', percentage: 30, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const },
+    ].map(cat => ({ ...cat, assignedAmount: (cat.percentage / 100) * this.totalBalanceMock }));
+  }
+
+categories: CategoryInterface[] = [...this.mockCategories];
 
   addCategory(category: CategoryInterface) {
-    this.mockCategories.push(this.categoryExample);
+    this.categories.push(category);
   }
 
   get freePercentage(): number {

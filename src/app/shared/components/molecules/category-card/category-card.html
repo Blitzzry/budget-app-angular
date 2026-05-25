@@ -1,7 +1,9 @@
 <div class="card flex flex-col p-5 w-full justify-between">
     <div class="flex items-center space-between gap-4">
         <p class="principal text-lg">Mis categorias</p>
-        <button (click)="budgetService.addCategory(categoryExample)" class="button p-2 cursor-pointer rounded flex items-center gap-1">
+        <input [(ngModel)]="newCategory.name" placeholder="Nombre" class="principal"/>
+        <input [(ngModel)]="newCategory.percentage" type=number placeholder="Porcentaje" class="principal"/>
+        <button (click)="addCategory()" class="button p-2 cursor-pointer rounded flex items-center gap-1">
             <div class="flex items-center">
             <app-icon  name="plus" [size]="16"></app-icon>
             Agregar categoria
