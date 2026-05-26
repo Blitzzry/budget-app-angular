@@ -28,11 +28,13 @@ export class BudgetService {
   totalBalanceMock: number = 1;
   
   mockCategories: CategoryInterface[] = [
-    { id: 1, name: 'Shopping', percentage: 40, isLocked: false, assignedAmount: 0, iconName: 'shopping-cart' as const },
-    { id: 2, name: 'Food', percentage: 10, isLocked: false, assignedAmount: 0, iconName: 'food' as const },
-    { id: 3, name: 'Transport', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
-    { id: 4, name: 'Entertainment', percentage: 30, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const },
-    ];
+    { id: 1, name: 'Ahorro', percentage: 28.57, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
+    { id: 2, name: 'Emergencia', percentage: 8.57, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
+    { id: 3, name: 'Novia', percentage: 17.14, isLocked: false, assignedAmount: 0, iconName: 'personal' as const },
+    { id: 4, name: 'Gastos Hogar', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'house' as const },
+    { id: 5, name: 'Transporte', percentage: 8.57, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
+    { id: 6, name: 'Gustos propios', percentage: 17.14, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
+  ];
   
   updateTotalBalance(newTotal: number) {
     this.totalBalanceMock = newTotal;
@@ -54,8 +56,6 @@ categories: CategoryInterface[] = [...this.mockCategories];
     }
     
     testAlgorithm() {
-    
-
     const distributeBudget = (categories: CategoryInterface[], amountToDistribute: number): CategoryInterface[] => {
         for (let category of categories) {
           if (!category.isLocked) {

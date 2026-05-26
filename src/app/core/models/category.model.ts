@@ -5,5 +5,5 @@ export interface CategoryInterface {
     isLocked: boolean;
     assignedAmount: number;
     totalAmount?: number;
-    iconName: 'shopping-cart' | 'food' | 'transport' | 'entertainment';
+    iconName: 'personal' | 'house' | 'health' | 'heart' | 'savings' | 'pencil-square' | 'lock' | 'arrow-up-circle' | 'arrow-down-circle' | 'plus' | 'shopping-cart' | 'food' | 'transport' | 'entertainment' | 'pencil' | 'trash';
 }

@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 })
 export class Icon {
   constructor() {}
-  @Input() name!: 'pencil-square' | 'lock' | 'arrow-up-circle' | 'arrow-down-circle' | 'plus' | 'shopping-cart' | 'food' | 'transport' | 'entertainment' | 'pencil' | 'trash';
+  @Input() name!: 'personal' | 'unlock' | 'house' | 'health' | 'heart' | 'savings' | 'pencil-square' | 'lock' | 'arrow-up-circle' | 'arrow-down-circle' | 'plus' | 'shopping-cart' | 'food' | 'transport' | 'entertainment' | 'pencil' | 'trash';
   @Input() size: string = 'xxs';
   get sizeClasses(): string {
     return this.sizeClassesBuffer[this.size as keyof typeof this.sizeClassesBuffer] ?? this.sizeClassesBuffer['base'];

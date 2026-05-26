@@ -2,6 +2,19 @@
 
 @import 'tailwindcss';
 
+body {
+    font-family: 'Lora', serif;
+    background:
+    linear-gradient(
+        180deg,
+        rgb(10,14,23) 0%,
+        rgb(15,23,42) 100%
+        )}
+
+.main-title {
+  color: rgb(212, 175, 122)
+}
+
 .principal {
     color: rgb(245, 247, 250)
 }
@@ -17,15 +30,46 @@ border: 1px solid rgb(38,45,61);
 border-radius: 6px;
 }
 
-.button {
-    border-color: rgb(120, 95, 62);
-    border-width: 1px;
-    background-color: rgb(44, 38, 31);
-    color: rgb(232, 204, 163);
+button {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+
+    color: #9CA3AF;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-button{
-    cursor: pointer;
+button:hover {
+    background: rgba(230, 179, 95, 0.12);
+
+    border-color: rgba(230, 179, 95, 0.35);
+
+    color: #E6B35F;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 12px rgba(230, 179, 95, 0.18),
+        0 4px 20px rgba(230, 179, 95, 0.08);
+}
+
+button:hover{
+    color: rgb(232, 204, 163);
 }
 
 .expenses {
@@ -34,4 +78,61 @@ button{
 
 .income {
     color: rgb(74, 222, 128)
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.02);
+
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        rgba(230,179,95,0.45),
+        rgba(180,130,50,0.35)
+    );
+
+    border-radius: 999px;
+
+    border: 2px solid rgba(10,15,25,0.9);
+
+    transition:
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(230,179,95,0.75),
+        rgba(212,160,70,0.65)
+    );
+
+    box-shadow:
+        0 0 10px rgba(230,179,95,0.25),
+        0 0 20px rgba(230,179,95,0.10);
+}
+
+.transactions-container {
+    overflow-y: overlay;
+}
+
+.transactions-container::-webkit-scrollbar-thumb {
+    opacity: 0;
+}
+
+.transactions-container:hover::-webkit-scrollbar-thumb {
+    opacity: 1;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.03);
+
+    backdrop-filter: blur(10px);
 }
