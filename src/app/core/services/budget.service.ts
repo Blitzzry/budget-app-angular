@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { CategoryInterface } from '../models/category.model';
+import { CategoryInterface, presetCategoryInterface } from '../models/category.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BudgetService {
   uiConfig = signal<any>(null);
+
   constructor(private http: HttpClient) {
     this.testAlgorithm();
   }
@@ -17,16 +18,12 @@ export class BudgetService {
     });
   }
 
-  
-  get totalAssigned(): number {
-    return this.categories.reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
-  }
   customerName: string = 'Anny Sharidt';
   totalIncome: number = 0;
   totalExpenses: number = 0;
   monthlyDifference: number = 0;
   totalBalanceMock: number = 1;
-  
+
   mockCategories: CategoryInterface[] = [
     { id: 1, name: 'Ahorro', percentage: 28.57, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
     { id: 2, name: 'Emergencia', percentage: 8.57, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
@@ -35,37 +32,87 @@ export class BudgetService {
     { id: 5, name: 'Transporte', percentage: 8.57, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
     { id: 6, name: 'Gustos propios', percentage: 17.14, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
   ];
-  
-  updateTotalBalance(newTotal: number) {
-    this.totalBalanceMock = newTotal;
-    this.mockCategories.forEach(cat => {
-      cat.assignedAmount = (cat.percentage / 100) * this.totalBalanceMock;
-    });
-  }
 
-categories: CategoryInterface[] = [...this.mockCategories];
+  userCategories: presetCategoryInterface[] = [
+    {
+      id: 1,
+      name: 'Quincena del 15',
+      categories: [
+        { id: 1, name: 'Ahorro', percentage: 15, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
+        { id: 2, name: 'Emergencia', percentage: 8, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
+        { id: 3, name: 'Gastos Hogar', percentage: 25, isLocked: false, assignedAmount: 0, iconName: 'house' as const },
+        { id: 4, name: 'Transporte', percentage: 12, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
+        { id: 5, name: 'Citas Anny', percentage: 17, isLocked: false, assignedAmount: 0, iconName: 'personal' as const },
+        { id: 6, name: 'Gustos propios', percentage: 23, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
+      ]
+    },
+    {
+      id: 2,
+      name: 'Quincena del 30',
+      categories: [
+        { id: 1, name: 'Ahorro', percentage: 23, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
+        { id: 2, name: 'Emergencia', percentage: 10, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
+        { id: 3, name: 'Gastos Hogar', percentage: 17, isLocked: false, assignedAmount: 0, iconName: 'house' as const },
+        { id: 4, name: 'Transporte', percentage: 9, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
+        { id: 5, name: 'Citas Anny', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'personal' as const },
+        { id: 6, name: 'Gustos propios', percentage: 21, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
+      ]
+    },
+    {
+      id: 3,
+      name: 'Presupuesto Anny',
+      categories: [
+        { id: 1, name: 'Ahorro', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
+        { id: 2, name: 'Emergencia', percentage: 10, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
+        { id: 3, name: 'Gastos Hogar', percentage: 25, isLocked: false, assignedAmount: 0, iconName: 'house' as const },
+        { id: 4, name: 'Transporte', percentage: 15, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
+        { id: 5, name: 'Gustos propios', percentage: 30, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
+      ]
+    }
+  ];
 
-  addCategory(category: CategoryInterface) {
-    this.categories.push(category);
+  categories = signal<CategoryInterface[]>([...this.mockCategories]);
+
+  get totalAssigned(): number {
+    return this.categories().reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
   }
 
   get freePercentage(): number {
-    return this.categories
+    return this.categories()
       .filter(cat => !cat.isLocked)
       .reduce((acc, cat) => acc + cat.percentage, 0);
-    }
-    
-    testAlgorithm() {
+  }
+
+  updateTotalBalance(newTotal: number) {
+    this.totalBalanceMock = newTotal;
+    this.categories.update(cats =>
+      cats.map(cat => ({
+        ...cat,
+        assignedAmount: (cat.percentage / 100) * this.totalBalanceMock
+      }))
+    );
+  }
+
+  applyPreset(preset: CategoryInterface[]) {
+    this.categories.set(preset);
+    this.updateTotalBalance(this.totalBalanceMock);
+    console.table(this.categories());
+  }
+
+  addCategory(category: CategoryInterface) {
+    this.categories.update(cats => [...cats, category]);
+  }
+
+  testAlgorithm() {
     const distributeBudget = (categories: CategoryInterface[], amountToDistribute: number): CategoryInterface[] => {
-        for (let category of categories) {
-          if (!category.isLocked) {
-            category.assignedAmount += this.freePercentage == 0 ? 0 : (category.percentage / this.freePercentage) * amountToDistribute;
-          }
+      for (let category of categories) {
+        if (!category.isLocked) {
+          category.assignedAmount += this.freePercentage == 0 ? 0 : (category.percentage / this.freePercentage) * amountToDistribute;
         }
-        return categories;
+      }
+      return categories;
     }
-    const resultado = distributeBudget(this.mockCategories, 1000); 
-    
+    const resultado = distributeBudget(this.mockCategories, 1000);
     console.table(resultado);
   }
 }

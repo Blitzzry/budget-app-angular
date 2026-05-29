@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { Icon } from '../../atoms/icon/icon';
 import { Category } from '../../atoms/category/category';
 import { BudgetService } from '../../../../core/services/budget.service';
@@ -11,9 +11,9 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './category-card.html',
   styleUrl: './category-card.css',
 })
-export class CategoryCard implements OnInit {
+export class CategoryCard {
+  constructor(public budgetService: BudgetService) {}
   totalAmount: number = 0;
-  exampleCategories: CategoryInterface[] = [];
   categoryExample: CategoryInterface = {} as CategoryInterface;
   newCategory: CategoryInterface = {
   id: crypto.randomUUID(),
@@ -34,9 +34,4 @@ export class CategoryCard implements OnInit {
     iconName: 'shopping-cart'
   };
 }
-  constructor(public budgetService: BudgetService) {
-  }
-  ngOnInit(): void {
-    this.exampleCategories = this.budgetService.categories;
-  }
 }
