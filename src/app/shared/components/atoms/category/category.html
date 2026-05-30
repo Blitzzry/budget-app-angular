@@ -1,32 +1,38 @@
 <div class=" items-center justify-between grid grid-cols-4 p-4">
     <div class="flex gap-3 items-center">
-        <app-icon class="icon" [name]="iconName"/>
+        <app-icon class="icon" [name]="iconName" />
         @if (editing) {
-            <input [(ngModel)]="categoryName" class="principal input"/>
+        <input [(ngModel)]="editedCategory.name" class="principal input" (input)="onInput($event)" />
         } @else {
         <p class="principal">{{ categoryName }}</p>
         }
     </div>
-        <span class="percentage income place-self-center">{{ percentage }}%</span>
-        @if (assignedAmount > 0) {
-            <p class="assigned-amount principal place-self-center">${{ assignedAmount | number:'1.2-2' }}</p>
-        }
-        
+    @if (editing) {
+    <input [(ngModel)]="editedCategory.percentage" type="number" class="principal place-self-center input" (input)="onInput($event)" />
+    } @else {
+    <span class="percentage income place-self-center">{{ percentage }}%</span>
+    }
+    @if (assignedAmount > 0) {
+    <p class="assigned-amount principal place-self-center">${{ assignedAmount | number:'1.2-2' }}</p>
+    }
+
     <div class="flex gap-3 items-center place-self-end col-end-5 col-span-1">
         @if (isLocked) {
-            <button>
-                <app-icon class="icon" [name]="'lock'"/>
-            </button>
-        } @if (!isLocked){
-            <button>
-                <app-icon class="principal" [name]="'unlock'"/>
-            </button>
-        }
-        <button (click)="toggleEdit()">
-                <app-icon class="principal" [name]="'pencil'"/>
-            </button>
-        <button>
-            <app-icon class="principal" [name]="'trash'"/>
+        <button (click)="lockCategory()">
+            <app-icon class="icon" [name]="'lock'" />
         </button>
+        } @if (!isLocked){
+        <button (click)="lockCategory()">
+            <app-icon class="principal" [name]="'unlock'" />
+        </button>
+        }
+        @if (!isLocked) {
+        <button (click)="toggleEdit()">
+            <app-icon class="principal" [name]="'pencil'" />
+        </button>
+        <button (click)="deleteCategory()">
+            <app-icon class="principal" [name]="'trash'" />
+        </button>
+        }
     </div>
 </div>
