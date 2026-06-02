@@ -71,19 +71,20 @@ export class BudgetService {
     }
   ];
 
-  categories = signal<CategoryInterface[]>([...this.mockCategories]);
+  categories = signal<CategoryInterface[]>([]);
 
   get totalAssigned(): number {
-    return this.categories().reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
+    return this.categories()
+    .reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
   }
 
-  get freePercentage(): number {
+  get totalPercentage(): number {
     return this.categories()
       .filter(cat => !cat.isLocked)
-      .reduce((acc, cat) => acc + cat.percentage, 0);
+      .reduce((acc, cat) => acc - cat.percentage, 0) + 100;
   }
 
-  updateTotalBalance(newTotal: number) {
+  updateTotalAssigned(newTotal: number) {
     this.totalBalanceMock = newTotal;
     this.categories.update(cats =>
       cats.map(cat => ({
@@ -95,19 +96,20 @@ export class BudgetService {
 
   applyPreset(preset: CategoryInterface[]) {
     this.categories.set(preset);
-    this.updateTotalBalance(this.totalBalanceMock);
+    this.updateTotalAssigned(this.totalBalanceMock);
     console.table(this.categories());
   }
 
   addCategory(category: CategoryInterface) {
     this.categories.update(cats => [...cats, category]);
+    this.updateTotalAssigned(this.totalBalanceMock);
   }
 
   testAlgorithm() {
     const distributeBudget = (categories: CategoryInterface[], amountToDistribute: number): CategoryInterface[] => {
       for (let category of categories) {
         if (!category.isLocked) {
-          category.assignedAmount += this.freePercentage == 0 ? 0 : (category.percentage / this.freePercentage) * amountToDistribute;
+          category.assignedAmount += this.totalPercentage == 0 ? 0 : (category.percentage / this.totalPercentage) * amountToDistribute;
         }
       }
       return categories;

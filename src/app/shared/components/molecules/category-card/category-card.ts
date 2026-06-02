@@ -37,7 +37,7 @@ export class CategoryCard {
     console.table(this.budgetService.categories());
     console.table(editedCategory);
     this.budgetService.categories.update(cats => cats.map(cat => cat.id === categoryId ? { ...cat, ...editedCategory } : cat));
-    this.budgetService.updateTotalBalance(this.budgetService.totalBalanceMock);
+    this.budgetService.updateTotalAssigned(this.budgetService.totalBalanceMock);
   }
 
   addCategory() {

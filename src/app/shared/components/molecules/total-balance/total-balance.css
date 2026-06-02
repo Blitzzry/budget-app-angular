@@ -6,3 +6,15 @@
     border-radius: 6px;
     min-width: 60px;
 }
+
+.green {
+    color: rgb(74, 222, 128);
+}
+    
+.red {
+    color: rgb(248, 113, 113);
+}
+
+.yellow {
+    color: rgb(212, 175, 122)
+}
