@@ -1,0 +1,4 @@
+<div class="flex items-center">
+    <input [value]="displayValue" type="text" class="principal" (input)="onInput($event)" />
+    <span class="principal ml-3">{{ calculatePercentage(total, totalBalance) | number:'1.0-2' }}%</span>
+</div>

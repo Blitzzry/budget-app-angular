@@ -10,10 +10,10 @@
     @if (editing) {
     <input [(ngModel)]="editedCategory.percentage" type="number" class="principal place-self-center input" (input)="onInput($event)" />
     } @else {
-    <span class="percentage income place-self-center">{{ percentage }}%</span>
+    <span class="percentage income place-self-center">{{ percentage | number:'1.0-2' }}%</span>
     }
     @if (assignedAmount > 0) {
-    <p class="assigned-amount principal place-self-center">${{ assignedAmount | number:'1.2-2' }}</p>
+    <p class="assigned-amount principal place-self-center">${{ assignedAmount | number:'1.0-2' }}</p>
     }
 
     <div class="flex gap-3 items-center place-self-end col-end-5 col-span-1">

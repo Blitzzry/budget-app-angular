@@ -3,11 +3,12 @@ import { BudgetService } from '../../../../core/services/budget.service';
 import { DecimalPipe, NgClass } from '@angular/common';
 import { Icon } from '../../atoms/icon/icon';
 import { FormsModule } from '@angular/forms';
+import { PercentageCalculator } from '../percentage-calculator/percentage-calculator';
 
 
 @Component({
   selector: 'app-total-balance',
-  imports: [DecimalPipe, Icon, FormsModule, NgClass],
+  imports: [DecimalPipe, Icon, FormsModule, NgClass, PercentageCalculator],
   templateUrl: './total-balance.html',
   styleUrl: './total-balance.css',
 })
@@ -33,7 +34,6 @@ export class TotalBalance implements OnInit, AfterViewInit {
 }
 
   ngOnInit() {
-    this.budgetService.loadJson();
     this.budgetService.updateTotalAssigned(this.total);
   }
   ngAfterViewInit() {

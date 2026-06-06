@@ -12,12 +12,6 @@ export class BudgetService {
     this.testAlgorithm();
   }
 
-  loadJson() {
-    this.http.get('/data/budget.json').subscribe(data => {
-      this.uiConfig.set(data);
-    });
-  }
-
   customerName: string = 'Anny Sharidt';
   totalIncome: number = 0;
   totalExpenses: number = 0;
@@ -79,9 +73,9 @@ export class BudgetService {
   }
 
   get totalPercentage(): number {
-    return this.categories()
+    return Number(this.categories()
       .filter(cat => !cat.isLocked)
-      .reduce((acc, cat) => acc - cat.percentage, 0) + 100;
+      .reduce((acc, cat) => acc - cat.percentage, 0).toFixed(2)) + 100;
   }
 
   updateTotalAssigned(newTotal: number) {

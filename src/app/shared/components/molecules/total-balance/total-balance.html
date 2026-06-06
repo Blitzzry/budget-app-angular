@@ -1,6 +1,6 @@
 <div class="card p-5 h-full gap-2 flex flex-col">
     <div class="flex items-center justify-between">
-        <h1 class="text-xl principal">{{ budgetService.uiConfig()?.totalBalance }}</h1>
+        <h1 class="text-xl principal">Balance total</h1>
         <div class="flex items-center gap-3">
             <input [value]="displayValue" type="text" class="principal" (input)="onInput($event)" />
             <button class="button"
@@ -9,9 +9,9 @@
             </button>
         </div>
     </div>
-    <h1 class="principal my-2 text-2xl">${{ budgetService.totalBalanceMock | number:'1.2-2'}}</h1>
-    <div class="flex items-center gap-2 mt-8">
-        <p class="principal">Porcentaje disponible: </p><span class="text-sm text-gray-500" [ngClass]="statusColor">{{ budgetService.totalPercentage }}%</span> <p class="principal">
-
+    <h1 class="principal my-2 text-2xl">${{ budgetService.totalBalanceMock | number:'1.0-2'}}</h1>
+    <div class="flex items-center gap-2 my-2">
+        <p class="principal">Porcentaje disponible: </p><span class="text-sm text-gray-500" [ngClass]="statusColor">{{ budgetService.totalPercentage | number:'1.0-2' }}%</span> <p class="principal">
     </div>
+    <app-percentage-calculator [totalBalance]="budgetService.totalBalanceMock"></app-percentage-calculator>
 </div>
