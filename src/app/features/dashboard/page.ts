@@ -17,6 +17,6 @@ export class Page implements OnInit {
   constructor(public budgetService: BudgetService) {}
   totalBalance: number = 0;
   ngOnInit() {
-    this.totalBalance = this.budgetService.totalBalanceMock;
+    this.totalBalance = this.budgetService.totalBalance;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { Icon } from '../../atoms/icon/icon';
 import { Category } from '../../atoms/category/category';
 import { BudgetService } from '../../../../core/services/budget.service';
@@ -37,7 +37,7 @@ export class CategoryCard {
     console.table(this.budgetService.categories());
     console.table(editedCategory);
     this.budgetService.categories.update(cats => cats.map(cat => cat.id === categoryId ? { ...cat, ...editedCategory } : cat));
-    this.budgetService.updateTotalAssigned(this.budgetService.totalBalanceMock);
+    this.budgetService.updateTotalAssigned(this.budgetService.totalBalance);
   }
 
   addCategory() {

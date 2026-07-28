@@ -12,11 +12,10 @@ export class BudgetService {
     this.testAlgorithm();
   }
 
-  customerName: string = 'Anny Sharidt';
   totalIncome: number = 0;
   totalExpenses: number = 0;
   monthlyDifference: number = 0;
-  totalBalanceMock: number = 1;
+  totalBalance: number = 1;
 
   mockCategories: CategoryInterface[] = [
     { id: 1, name: 'Ahorro', percentage: 28.57, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
@@ -36,7 +35,7 @@ export class BudgetService {
         { id: 2, name: 'Emergencia', percentage: 8, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
         { id: 3, name: 'Gastos Hogar', percentage: 25, isLocked: false, assignedAmount: 0, iconName: 'house' as const },
         { id: 4, name: 'Transporte', percentage: 12, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
-        { id: 5, name: 'Citas Anny', percentage: 17, isLocked: false, assignedAmount: 0, iconName: 'personal' as const },
+        { id: 5, name: 'Citas Pareja', percentage: 17, isLocked: false, assignedAmount: 0, iconName: 'personal' as const },
         { id: 6, name: 'Gustos propios', percentage: 23, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
       ]
     },
@@ -48,13 +47,13 @@ export class BudgetService {
         { id: 2, name: 'Emergencia', percentage: 10, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
         { id: 3, name: 'Gastos Hogar', percentage: 17, isLocked: false, assignedAmount: 0, iconName: 'house' as const },
         { id: 4, name: 'Transporte', percentage: 9, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
-        { id: 5, name: 'Citas Anny', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'personal' as const },
+        { id: 5, name: 'Citas Pareja', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'personal' as const },
         { id: 6, name: 'Gustos propios', percentage: 21, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
       ]
     },
     {
       id: 3,
-      name: 'Presupuesto Anny',
+      name: 'Presupuesto Básico',
       categories: [
         { id: 1, name: 'Ahorro', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
         { id: 2, name: 'Emergencia', percentage: 10, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
@@ -79,24 +78,24 @@ export class BudgetService {
   }
 
   updateTotalAssigned(newTotal: number) {
-    this.totalBalanceMock = newTotal;
+    this.totalBalance = newTotal;
     this.categories.update(cats =>
       cats.map(cat => ({
         ...cat,
-        assignedAmount: (cat.percentage / 100) * this.totalBalanceMock
+        assignedAmount: (cat.percentage / 100) * newTotal
       }))
     );
   }
 
   applyPreset(preset: CategoryInterface[]) {
     this.categories.set(preset);
-    this.updateTotalAssigned(this.totalBalanceMock);
+    this.updateTotalAssigned(this.totalBalance);
     console.table(this.categories());
   }
 
   addCategory(category: CategoryInterface) {
     this.categories.update(cats => [...cats, category]);
-    this.updateTotalAssigned(this.totalBalanceMock);
+    this.updateTotalAssigned(this.totalBalance);
   }
 
   testAlgorithm() {
