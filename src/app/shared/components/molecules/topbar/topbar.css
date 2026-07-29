@@ -1,0 +1,52 @@
+.logo {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2.2rem;
+    color: rgb(212, 175, 122);
+    letter-spacing: -.02em;
+    font-weight: 700;
+    user-select: none;
+    transition: .25s;
+}
+
+.logo:hover {
+    color: rgb(224, 191, 140);
+}
+
+.login-btn {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 8px 25px;
+    background: transparent;
+    color: rgb(212, 175, 122);
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.login-btn:hover {
+
+    background: rgba(212, 175, 122, .08);
+
+    box-shadow:
+        0 0 20px rgba(212, 175, 122, .15);
+}
+
+.register-btn {
+    padding: 8px 30px;
+    border: none;
+    border-radius: 14px;
+    background: rgb(212, 175, 122);
+    color: rgb(17, 24, 39);
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.register-btn:hover {
+    background: rgb(198, 158, 90);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px rgba(212, 175, 122, .25);
+}

@@ -5,14 +5,13 @@
 body {
     font-family: 'Lora', serif;
     background:
-    linear-gradient(
-        180deg,
-        rgb(10,14,23) 0%,
-        rgb(15,23,42) 100%
-        )}
+        linear-gradient(180deg,
+            rgb(10, 14, 23) 0%,
+            rgb(15, 23, 42) 100%)
+}
 
 .main-title {
-  color: rgb(212, 175, 122)
+    color: rgb(212, 175, 122)
 }
 
 .principal {
@@ -24,26 +23,22 @@ body {
 }
 
 .card {
-background: rgba(17,24,39,0.7);
-backdrop-filter: blur(12px);
-border: 1px solid rgb(38,45,61);
-border-radius: 6px;
-}
-
-button.text-btn {
-  width: auto;
-  height: auto;
-  padding: 6px 12px;
-  gap: 6px;
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgb(38, 45, 61);
+    border-radius: 6px;
 }
 
 button {
-    width: 36px;
-    height: 36px;
+    width: auto;
+    height: auto;
+    padding: 6px 12px;
+    gap: 4px;
+
     border-radius: 12px;
 
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 
     color: #9CA3AF;
 
@@ -75,7 +70,7 @@ button:hover {
     box-shadow:
         0 0 12px rgba(230, 179, 95, 0.18),
         0 4px 20px rgba(230, 179, 95, 0.08);
-    }
+}
 
 .expenses {
     color: rgb(248, 113, 113)
@@ -91,21 +86,19 @@ button:hover {
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.02);
+    background: rgba(255, 255, 255, 0.02);
 
     border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-        180deg,
-        rgba(230,179,95,0.45),
-        rgba(180,130,50,0.35)
-    );
+    background: linear-gradient(180deg,
+            rgba(230, 179, 95, 0.45),
+            rgba(180, 130, 50, 0.35));
 
     border-radius: 999px;
 
-    border: 2px solid rgba(10,15,25,0.9);
+    border: 2px solid rgba(10, 15, 25, 0.9);
 
     transition:
         background 0.3s ease,
@@ -113,15 +106,13 @@ button:hover {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-        180deg,
-        rgba(230,179,95,0.75),
-        rgba(212,160,70,0.65)
-    );
+    background: linear-gradient(180deg,
+            rgba(230, 179, 95, 0.75),
+            rgba(212, 160, 70, 0.65));
 
     box-shadow:
-        0 0 10px rgba(230,179,95,0.25),
-        0 0 20px rgba(230,179,95,0.10);
+        0 0 10px rgba(230, 179, 95, 0.25),
+        0 0 20px rgba(230, 179, 95, 0.10);
 }
 
 .transactions-container {
@@ -137,7 +128,7 @@ button:hover {
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.03);
+    background: rgba(255, 255, 255, 0.03);
 
     backdrop-filter: blur(10px);
 }

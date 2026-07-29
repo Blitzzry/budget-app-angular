@@ -68,4 +68,11 @@ export class CategoriesRepository {
         if (error) throw error;
         return this.mapToCategory(data as CategoryRow);
     }
+    async delete(id: string): Promise<void> {
+        const { error } = await this.supabaseService.client
+            .from('categories')
+            .delete()
+            .eq('id', id)
+        if (error) throw error;
+    }
 }

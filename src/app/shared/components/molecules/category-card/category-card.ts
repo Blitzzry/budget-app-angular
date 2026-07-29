@@ -30,14 +30,11 @@ export class CategoryCard {
 
   removeCategory(categoryId: string | number) {
     this.budgetService.categories.update(cats => cats.filter(cat => cat.id !== categoryId));
-    console.log(categoryId);
-  }
+    }
 
   editCategory(categoryId: string | number, editedCategory: CategoryInterface) {
-    console.table(this.budgetService.categories());
-    console.table(editedCategory);
     this.budgetService.categories.update(cats => cats.map(cat => cat.id === categoryId ? { ...cat, ...editedCategory } : cat));
-    this.budgetService.updateTotalAssigned(this.budgetService.totalBalance);
+    this.budgetService.updateTotalAssigned(this.budgetService.totalBalance());
   }
 
   addCategory() {

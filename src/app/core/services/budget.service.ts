@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, effect, Injectable, signal } from '@angular/core';
 import { CategoryInterface, presetCategoryInterface } from '../models/category.model';
 import { HttpClient } from '@angular/common/http';
 
@@ -15,7 +15,6 @@ export class BudgetService {
   totalIncome: number = 0;
   totalExpenses: number = 0;
   monthlyDifference: number = 0;
-  totalBalance: number = 1;
 
   mockCategories: CategoryInterface[] = [
     { id: 1, name: 'Ahorro', percentage: 28.57, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
@@ -64,11 +63,23 @@ export class BudgetService {
     }
   ];
 
-  categories = signal<CategoryInterface[]>([]);
+  totalBalance = signal<number>(1);
+  categories = signal<CategoryInterface[]>([
+    { id: 1, name: 'Ahorro', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
+    { id: 2, name: 'Emergencia', percentage: 10, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
+    { id: 3, name: 'Gastos Hogar', percentage: 25, isLocked: false, assignedAmount: 0, iconName: 'house' as const },
+    { id: 4, name: 'Transporte', percentage: 15, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
+    { id: 5, name: 'Gustos propios', percentage: 30, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
+
+  ]);
+
+  tanteo = effect(() => {
+    console.log('Total Balance:', this.totalBalance());
+  });
 
   get totalAssigned(): number {
     return this.categories()
-    .reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
+      .reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
   }
 
   get totalPercentage(): number {
@@ -77,25 +88,28 @@ export class BudgetService {
       .reduce((acc, cat) => acc - cat.percentage, 0).toFixed(2)) + 100;
   }
 
+
+
   updateTotalAssigned(newTotal: number) {
-    this.totalBalance = newTotal;
+    this.totalBalance.set(newTotal);
     this.categories.update(cats =>
       cats.map(cat => ({
         ...cat,
-        assignedAmount: (cat.percentage / 100) * newTotal
+        assignedAmount: (cat.percentage / 100) * this.totalBalance()
       }))
     );
+    console.log(this.totalBalance())
   }
 
   applyPreset(preset: CategoryInterface[]) {
     this.categories.set(preset);
-    this.updateTotalAssigned(this.totalBalance);
+    this.updateTotalAssigned(this.totalBalance());
     console.table(this.categories());
   }
 
   addCategory(category: CategoryInterface) {
     this.categories.update(cats => [...cats, category]);
-    this.updateTotalAssigned(this.totalBalance);
+    this.updateTotalAssigned(this.totalBalance());
   }
 
   testAlgorithm() {
