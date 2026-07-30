@@ -8,14 +8,18 @@
         }
     </div>
     @if (editing) {
-    <input [(ngModel)]="editedCategory.percentage" type="number" class="principal place-self-center input" (input)="onInput($event)" />
+    <input [value]="displayPercentageValue" type=text id="percentage" class="principal place-self-center input"
+        (input)="onInput($event)" />
     } @else {
     <span class="percentage income place-self-center">{{ percentage | number:'1.0-2' }}%</span>
     }
-    @if (assignedAmount > 0) {
+
+    @if (editing) {
+    <input [value]="displayAssignedValue" type="text" id="assignedAmount" class="principal place-self-center input"
+        (input)="onInput($event)" />
+    } @else {
     <p class="assigned-amount principal place-self-center">${{ assignedAmount | number:'1.0-2' }}</p>
     }
-
     <div class="flex gap-3 items-center place-self-end col-end-5 col-span-1">
         @if (isLocked) {
         <button (click)="lockCategory()">
@@ -27,7 +31,7 @@
         </button>
         }
         @if (!isLocked) {
-        <button (click)="toggleEdit()">
+        <button (click)="inputStyle()">
             <app-icon class="principal" [name]="'pencil'" />
         </button>
         <button (click)="deleteCategory()">

@@ -2,11 +2,10 @@ import { Component, Input, OnInit, AfterViewInit, effect } from '@angular/core';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { DecimalPipe, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PercentageCalculator } from '../percentage-calculator/percentage-calculator';
 
 @Component({
   selector: 'app-total-balance',
-  imports: [DecimalPipe, FormsModule, NgClass, PercentageCalculator],
+  imports: [DecimalPipe, FormsModule, NgClass],
   templateUrl: './total-balance.html',
   styleUrl: './total-balance.css',
 })

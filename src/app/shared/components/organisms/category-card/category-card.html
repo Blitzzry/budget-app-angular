@@ -10,7 +10,7 @@
     </div>
     <div class="flex flex-col mt-2">
         @for (item of budgetService.categories(); track $index) {
-            <app-category [categoryName]="item.name" [iconName]="item.iconName" [assignedAmount]="item.assignedAmount" [percentage]="item.percentage" [id]="item.id" (remove)="removeCategory($event)" (lock)="lockCategory($event)" (edit)="editCategory($event.id, $event.category)"/>
+            <app-category [categoryName]="item.name" [iconName]="item.iconName" [assignedAmount]="item.assignedAmount" [percentage]="item.percentage" [id]="item.id" (edit)="onEditCategory($event)" (remove)="removeCategory($event)" (lock)="lockCategory($event)"/>
         }
     </div>
 </div>

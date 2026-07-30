@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Icon } from '../../atoms/icon/icon';
-import { Category } from '../../atoms/category/category';
+import { Category } from '../../molecules/category/category';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { CategoryInterface } from '../../../../core/models/category.model';
 import { FormsModule } from '@angular/forms';
@@ -28,13 +28,13 @@ export class CategoryCard {
     this.budgetService.categories.update(cats => cats.map(cat => cat.id === categoryId ? { ...cat, isLocked: !cat.isLocked } : cat));
   }
 
+  onEditCategory(event: { id: string | number; category: CategoryInterface }) {
+    this.budgetService.categories.update(cats => cats.map(cat => cat.id === event.id ? { ...event.category } : cat)
+    );
+  }
+
   removeCategory(categoryId: string | number) {
     this.budgetService.categories.update(cats => cats.filter(cat => cat.id !== categoryId));
-    }
-
-  editCategory(categoryId: string | number, editedCategory: CategoryInterface) {
-    this.budgetService.categories.update(cats => cats.map(cat => cat.id === categoryId ? { ...cat, ...editedCategory } : cat));
-    this.budgetService.updateTotalAssigned(this.budgetService.totalBalance());
   }
 
   addCategory() {

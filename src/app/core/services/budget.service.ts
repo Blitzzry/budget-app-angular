@@ -73,10 +73,6 @@ export class BudgetService {
 
   ]);
 
-  tanteo = effect(() => {
-    console.log('Total Balance:', this.totalBalance());
-  });
-
   get totalAssigned(): number {
     return this.categories()
       .reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
@@ -88,8 +84,6 @@ export class BudgetService {
       .reduce((acc, cat) => acc - cat.percentage, 0).toFixed(2)) + 100;
   }
 
-
-
   updateTotalAssigned(newTotal: number) {
     this.totalBalance.set(newTotal);
     this.categories.update(cats =>
@@ -98,7 +92,6 @@ export class BudgetService {
         assignedAmount: (cat.percentage / 100) * this.totalBalance()
       }))
     );
-    console.log(this.totalBalance())
   }
 
   applyPreset(preset: CategoryInterface[]) {
@@ -122,6 +115,5 @@ export class BudgetService {
       return categories;
     }
     const resultado = distributeBudget(this.mockCategories, 1000);
-    console.table(resultado);
   }
 }
