@@ -2,12 +2,9 @@
 
 @import 'tailwindcss';
 
-body {
+html, body {
     font-family: 'Lora', serif;
-    background:
-        linear-gradient(180deg,
-            rgb(10, 14, 23) 0%,
-            rgb(15, 23, 42) 100%)
+    background: linear-gradient(180deg, rgb(10, 14, 23) 0%, rgb(15, 23, 42) 100%)
 }
 
 .main-title {
@@ -19,7 +16,9 @@ body {
 }
 
 .secundary {
-    color: rgb(100, 116, 139)
+    font-size: 15px;
+    color: rgb(148, 163, 184);
+    line-height: 1.6;
 }
 
 .card {
@@ -34,22 +33,15 @@ button {
     height: auto;
     padding: 6px 12px;
     gap: 4px;
-
     border-radius: 12px;
-
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
-
     color: #9CA3AF;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     cursor: pointer;
-
-    transition:
-        background 0.25s ease,
+    transition: background 0.25s ease,
         border-color 0.25s ease,
         color 0.25s ease,
         transform 0.25s ease,
@@ -58,17 +50,11 @@ button {
 
 button:hover {
     background: rgba(230, 179, 95, 0.12);
-
     border-color: rgba(230, 179, 95, 0.35);
-
     color: #E6B35F;
-
     transform: translateY(-2px);
-
     color: rgb(232, 204, 163);
-
-    box-shadow:
-        0 0 12px rgba(230, 179, 95, 0.18),
+    box-shadow: 0 0 12px rgba(230, 179, 95, 0.18),
         0 4px 20px rgba(230, 179, 95, 0.08);
 }
 
@@ -87,7 +73,6 @@ button:hover {
 
 ::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.02);
-
     border-radius: 999px;
 }
 
@@ -95,13 +80,9 @@ button:hover {
     background: linear-gradient(180deg,
             rgba(230, 179, 95, 0.45),
             rgba(180, 130, 50, 0.35));
-
     border-radius: 999px;
-
     border: 2px solid rgba(10, 15, 25, 0.9);
-
-    transition:
-        background 0.3s ease,
+    transition: background 0.3s ease,
         box-shadow 0.3s ease;
 }
 
@@ -110,8 +91,7 @@ button:hover {
             rgba(230, 179, 95, 0.75),
             rgba(212, 160, 70, 0.65));
 
-    box-shadow:
-        0 0 10px rgba(230, 179, 95, 0.25),
+    box-shadow: 0 0 10px rgba(230, 179, 95, 0.25),
         0 0 20px rgba(230, 179, 95, 0.10);
 }
 
@@ -129,6 +109,5 @@ button:hover {
 
 ::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.03);
-
     backdrop-filter: blur(10px);
 }

@@ -80,7 +80,6 @@ export class BudgetService {
 
   get totalPercentage(): number {
     return Number(this.categories()
-      .filter(cat => !cat.isLocked)
       .reduce((acc, cat) => acc - cat.percentage, 0).toFixed(2)) + 100;
   }
 

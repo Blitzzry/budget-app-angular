@@ -29,8 +29,9 @@ export class TotalBalance implements OnInit, AfterViewInit {
   }
 
   get statusColor(): string {
-    if (this.budgetService.totalPercentage > 80) return 'green';
-    if (this.budgetService.totalPercentage > 50) return 'yellow';
+    if (this.budgetService.totalPercentage >= 0) {
+      return 'green'
+    };
     return 'red';
   }
 

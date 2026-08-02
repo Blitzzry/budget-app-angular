@@ -1,11 +1,11 @@
-<div class="h-screen background w-screen pt-3 h-screen w-screen background">
-    <app-topbar></app-topbar>
+<div class="p-6">
+    <app-topbar (loginClick)="goToLogin()" (signUpClick)="goToSignUp()"></app-topbar>
     <h1 class="text-2xl ml-4 main-title">{{ budgetService.uiConfig()?.appName }}</h1>
-        <div class="grid grid-cols-2 grid-rows-1 gap-4 mt-4 mx-4">
+    <div class="grid grid-cols-2 grid-rows-1 gap-4 mt-4 mx-4">
         <app-total-balance class="h-full"/>
         <app-preset-card class="h-full"/>
     </div>
-    <div class="mt-4 mx-4 flex justify-between gap-4">
+    <div class="mt-4 flex justify-between gap-4">
         <app-category-card class="w-full"/>
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-topbar',
@@ -6,4 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './topbar.html',
   styleUrl: './topbar.css',
 })
-export class Topbar {}
+export class Topbar {
+@Output() loginClick = new EventEmitter<void>();
+@Output() signUpClick = new EventEmitter<void>();
+}
