@@ -1,11 +1,7 @@
 @if (userRegistered){
-<div class="w-92 h-auto flex flex-col items-center justify-center p-6 rounded-lg bg-white shadow-md gap-2">
-    <h1 class="text-2xl font-semibold text-gray-800">Mooder</h1>
-    <p class="text-green-300 text-center my-2">[name]="'check-circle'" [size]="'lg'" </p>
-    <p class="text-lg">You have successfully registered!</p>
-    <span class="text-gray-600 text-center">Now you can browse and manage your virtual closet!</span>
-    <button class="sign-up-btn my-4" (click)="signIn()">Log In!</button>
-</div>
+<h1>Te logueaste correctamente
+    <a href="#" routerLink="/" class="sign-up-btn hover:underline">Casa</a>
+</h1>
 } @else {
 <div class="auth-card flex items-center justify-center flex-col gap-2 mt-6">
     <h1 class="text-3xl my-4 main-title font-semibold text-gray-800">Getter</h1>
@@ -22,11 +18,14 @@
         <input class="auth-input" type="password" placeholder="...." [(ngModel)]="confirmPassword" />
         <div class="flex my-4 w-auto">
             <label class="text-sm self-start" style="color:#5C554C;">
-                <input class="mr-2" [(ngModel)]="terms" type="checkbox" style="width:14px;height:14px;accent-color:#C4A86A;" />
-                Acepto los <a href="#" routerLink="/logIn" class="sign-up-btn hover:underline">términos</a> y <a href="#" routerLink="/logIn" class="sign-up-btn hover:underline">condiciones</a>
+                <input class="mr-2" [(ngModel)]="terms" type="checkbox"
+                    style="width:14px;height:14px;accent-color:#C4A86A;" />
+                Acepto los <a href="#" routerLink="" class="sign-up-btn hover:underline">términos</a> y <a href="#"
+                    routerLink="" class="sign-up-btn hover:underline">condiciones</a>
             </label>
         </div>
-        <button class="log-in-btn my-2" (click)="signUp()">Ingresar!</button>
+        <button class="log-in-btn my-2"
+            (click)="signUp(email, password, confirmPassword, name, terms)">Ingresar!</button>
     </div>
     <div class="flex flex-col gap-2 items-center w-full">
         <span class="text-sm mt-1 mb-2 secundary">Ya eres usuario?
