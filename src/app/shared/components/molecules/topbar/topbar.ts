@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, input, Output, signal } from '@angular/core';
+import { AuthService } from '../../../../core/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-topbar',
@@ -7,6 +9,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrl: './topbar.css',
 })
 export class Topbar {
-@Output() loginClick = new EventEmitter<void>();
-@Output() signUpClick = new EventEmitter<void>();
+  constructor() {}
+  @Input() isUserLogged: boolean = false
+  @Input() userName?: string = ''
+  @Output() loginClick = new EventEmitter<void>();
+  @Output() signUpClick = new EventEmitter<void>();
+  @Output() signOutClick = new EventEmitter<void>();
 }

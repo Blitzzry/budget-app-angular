@@ -8,6 +8,7 @@ import { LogInForm } from '../../shared/components/organisms/auth/log-in-form/lo
 import { SignUpForm } from '../../shared/components/organisms/auth/sign-up-form/sign-up-form';
 import { App } from '../../app';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-page',
@@ -22,7 +23,9 @@ import { Router } from '@angular/router';
   styleUrl: './page.css',
 })
 export class Page implements OnInit {
-  constructor(public budgetService: BudgetService, private router: Router) {}
+  constructor(public budgetService: BudgetService, private router: Router, public authService: AuthService) {
+  }
+  
   totalBalance: number = 0;
   goToSignUp() {
     this.router.navigate(["/signUp"])

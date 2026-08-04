@@ -1,16 +1,17 @@
 import { Component, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-log-in-form',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, ],
   templateUrl: './log-in-form.html',
   styleUrl: './log-in-form.css',
 })
 export class LogInForm {
+  constructor(public authService: AuthService, private router: Router) { }
   @Input() userRegistered: boolean = false;
-  @Output() closeWindow: any;
   rememberMe: boolean = false;
   name: string = '';
   email: string = '';
@@ -18,6 +19,12 @@ export class LogInForm {
   confirmPassword: string = "";
   signUp() {
   }
-  logIn() {
+  async logIn(email: string, password: string) {
+    try {
+      const result = this.authService.signIn(email, password)
+      this.router.navigate([''])
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

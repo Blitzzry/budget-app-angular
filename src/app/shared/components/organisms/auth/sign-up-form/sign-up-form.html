@@ -1,5 +1,5 @@
-@if (userRegistered){
-<h1>Te logueaste correctamente
+@if (authService.userIsLoggedIn()){
+<h1>Te registraste correctamente
     <a href="#" routerLink="/" class="sign-up-btn hover:underline">Casa</a>
 </h1>
 } @else {
@@ -8,7 +8,7 @@
     <span class="text-2xl font-bold text-white">Crea una cuenta</span>
     <span class="text-sm secundary mb-5">Registrate y comienza a gestionar tu presupuesto</span>
     <div class="flex flex-col w-full gap-1.5">
-        <span class="text-sm text-white">Nombre completo</span>
+        <span class="text-sm text-white">Nombre de usuario</span>
         <input class="auth-input" type="text" placeholder="Pepito Perez" [(ngModel)]="name" />
         <span class="text-sm text-white">Correo electrónico</span>
         <input class="auth-input" type="email" placeholder="tucorreo@email.com" [(ngModel)]="email" />

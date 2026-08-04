@@ -1,6 +1,6 @@
 import { Component, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../../core/services/auth.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { AuthService } from '../../../../../core/services/auth.service';
   styleUrl: './sign-up-form.css',
 })
 export class SignUpForm {
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, private router: Router) { }
   @Input() userRegistered: boolean = false;
   name: string = '';
   email: string = '';
@@ -20,6 +20,7 @@ export class SignUpForm {
   signUp(email: string, password: string, confirmPassword: string, name: string, terms: boolean) {
     if (password == confirmPassword && terms == true) {
       this.authService.signUp(name, email, password)
+      this.router.navigate([''])
     } else {
       throw console.error();
     }
