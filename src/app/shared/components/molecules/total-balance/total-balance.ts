@@ -9,8 +9,9 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './total-balance.html',
   styleUrl: './total-balance.css',
 })
-export class TotalBalance implements OnInit, AfterViewInit {
+export class TotalBalance implements OnInit {
   constructor(public budgetService: BudgetService) {
+    this.displayValue = this.budgetService.totalBalance().toLocaleString('es-CO');
     effect(() => {
       this.budgetService.updateTotalAssigned(budgetService.totalBalance());
     });
@@ -29,7 +30,7 @@ export class TotalBalance implements OnInit, AfterViewInit {
   }
 
   get statusColor(): string {
-    if (this.budgetService.totalPercentage >= 0) {
+    if (this.budgetService.totalPercentage() >= 0) {
       return 'green'
     };
     return 'red';
@@ -37,9 +38,5 @@ export class TotalBalance implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.budgetService.updateTotalAssigned(this.budgetService.totalBalance());
-  }
-
-  ngAfterViewInit() {
-    this.displayValue = this.budgetService.totalBalance().toLocaleString('es-CO');
   }
 }

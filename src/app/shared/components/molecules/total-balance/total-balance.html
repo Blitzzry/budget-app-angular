@@ -10,7 +10,7 @@
         <div class="flex items-center gap-2">
             <p class="text-lg text-center principal">Disponible para usar:</p>
             <span class="text-sm text-gray-800" [ngClass]="statusColor">{{
-                budgetService.totalPercentage | number:'1.0-2' }}%</span>
+                budgetService.totalPercentage() | number:'1.0-2' }}%</span>
         </div>
     </div>
 </div>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { BudgetService } from '../../../../core/services/budget.service';
-import { presetCategoryInterface } from '../../../../core/models/category.model';
 import { CategoryInterface } from '../../../../core/models/category.model';
 import { Icon } from '../../atoms/icon/icon';
 
@@ -11,14 +10,9 @@ import { Icon } from '../../atoms/icon/icon';
   styleUrl: './preset-card.css',
 })
 export class PresetCard {
-  constructor(public budgetService: BudgetService) {}
-  examplePresets: presetCategoryInterface[] = [];
+  constructor(public budgetService: BudgetService) { }
   preset: CategoryInterface[] = [];
-    applyPreset(preset: CategoryInterface[]) {
-      console.log(this.budgetService.categories());
+  applyPreset(preset: CategoryInterface[]) {
     this.budgetService.applyPreset(preset);
-  }
-    ngOnInit(): void {
-    this.examplePresets = this.budgetService.userCategories;
   }
 }

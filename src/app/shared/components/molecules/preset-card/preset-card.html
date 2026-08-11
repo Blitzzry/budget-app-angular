@@ -1,7 +1,7 @@
 <div class="card p-5 w-full flex flex-col">
     <p class="principal text-lg main-title font-bold">Presets</p>
     <div class="flex flex-col mt-2 gap-3 overflow-y-auto overflow-x-hidden max-h-40">
-        @for (item of examplePresets; track $index) {
+        @for (item of this.budgetService.userCategories(); track $index) {
             <div class="flex items-center preset-category justify-between p-2 rounded-md">
                 <p class="principal">{{ item.name }}</p>
                 <button (click)="applyPreset(item.categories)" class="text-btn">

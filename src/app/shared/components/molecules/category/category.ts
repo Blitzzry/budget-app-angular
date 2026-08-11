@@ -39,44 +39,44 @@ export class Category implements OnInit, OnChanges {
     iconName: 'shopping-cart'
   };
 
+  assigner(newPercentage: number, newAmount: number) {
+    this.percentage = newPercentage;
+    this.assignedAmount = newAmount;
+    this.editedCategory.percentage = newPercentage;
+    this.editedCategory.assignedAmount = newAmount;
+    this.displayPercentageValue = this.formatter.format(newPercentage);
+    this.displayAssignedValue = this.formatter.format(newAmount);
+
+  }
+
   onInput(event: Event) {
     const input = event.target as HTMLInputElement;
     const total = this.budgetService.totalBalance();
-
     if (input.id === 'percentage') {
       const cleanString = input.value.replace(/[^\d,.]/g, '')
-      input.value = cleanString;
       let newPercentage = Number(cleanString.replace(/\./g, '').replace(',', '.'));
+      input.value = newPercentage.toString()
       if (newPercentage > 100) {
         newPercentage = 100
+        input.value = '100';
       };
       const newAmount = (newPercentage / 100) * total;
-      this.percentage = newPercentage;
-      this.assignedAmount = newAmount;
-      this.editedCategory.percentage = newPercentage;
-      this.editedCategory.assignedAmount = newAmount;
-      this.displayPercentageValue = this.formatter.format(newPercentage);
-      this.displayAssignedValue = this.formatter.format(newAmount);
+      this.assigner(newPercentage, newAmount)
     }
-
     if (input.id === 'assignedAmount') {
       const cleanString = input.value.replace(/[^\d,.]/g, '')
-      input.value = cleanString;
       let newAmount = Number(cleanString.replace(/\./g, '').replace(',', '.'));
+      input.value = newAmount.toString()
       if (newAmount > total) {
         newAmount = total
+        input.value = total.toString();
       };
       const newPercentage = total === 0 ? 0 : (newAmount / total) * 100;
-      this.assignedAmount = newAmount;
-      this.percentage = newPercentage;
-      this.editedCategory.assignedAmount = newAmount;
-      this.editedCategory.percentage = newPercentage;
-      this.displayAssignedValue = this.formatter.format(newAmount);
-      this.displayPercentageValue = this.formatter.format(newPercentage);
+      this.assigner(newPercentage, newAmount)
     }
   }
 
-  inputStyle() {
+  onEditChange() {
     this.editing = !this.editing;
     if (this.editing) {
       this.displayPercentageValue = this.formatter.format(this.percentage);

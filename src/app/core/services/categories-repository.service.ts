@@ -6,7 +6,7 @@ import { SupabaseService } from './supabase.service';
 
 export class CategoriesRepository {
     constructor(private supabaseService: SupabaseService) { }
-    private mapToCategory(row: CategoryRow): CategoryInterface {
+    private mapToCategory(row: Omit<CategoryRow, 'assignedAmount'>): CategoryInterface {
         return {
             id: row.id,
             name: row.name,
@@ -26,9 +26,6 @@ export class CategoriesRepository {
         };
         if (changes.isLocked !== undefined) {
             row.locked = changes.isLocked
-        };
-        if (changes.assignedAmount !== undefined) {
-            row.assigned_amount = changes.assignedAmount
         };
         if (changes.iconName !== undefined) {
             row.icon_name = changes.iconName
@@ -58,7 +55,7 @@ export class CategoriesRepository {
         if (error) throw error;
         return this.mapToCategory(data as CategoryRow);
     }
-    async update(changes: Partial<CategoryInterface>, id: string): Promise<CategoryInterface> {
+    async update(changes: Partial<Omit<CategoryInterface, 'assignedAmount'>>, id: string): Promise<CategoryInterface> {
         const { data, error } = await this.supabaseService.client
             .from('categories')
             .update(this.mapToRow(changes))

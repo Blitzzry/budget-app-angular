@@ -1,31 +1,51 @@
 import { computed, effect, Injectable, signal } from '@angular/core';
 import { CategoryInterface, presetCategoryInterface } from '../models/category.model';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
+import { CategoriesRepository } from './categories-repository.service';
+import { SupabaseService } from './supabase.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BudgetService {
-  uiConfig = signal<any>(null);
-
-  constructor(private http: HttpClient) {
-    this.testAlgorithm();
+  constructor(private authService: AuthService, private catsRep: CategoriesRepository, private supabaseService: SupabaseService) {
+    effect(() => {
+      if (this.authService.userIsLoggedIn() == false) {
+        this.categories.set(this.publicCats)
+        this.userCategories.set(this.publicUserCategories)
+      } else {
+        this.catsRep.getAll().then((categories) => {
+          if (categories.length !== 0) {
+            this.categories.set(categories)
+            this.categories.update(cats =>
+              cats.map(cat => ({
+                ...cat,
+                assignedAmount: (cat.percentage / 100) * this.totalBalance()
+              }))
+            ); this.userCategories.set(this.publicUserCategories)
+          } else {
+            Promise.all(this.publicCats.map((cat) => this.catsRep.create(cat)))
+              .then((createdCategories) => {
+                this.categories.set(createdCategories)
+              })
+          }
+        });
+      }
+    })
   }
 
-  totalIncome: number = 0;
-  totalExpenses: number = 0;
   monthlyDifference: number = 0;
+  userCategories = signal<presetCategoryInterface[]>([]);
+  categories = signal<CategoryInterface[]>([])
+  totalBalance = signal<number>(1);
+  uiConfig = signal<any>(null);
+  uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
+  unlockedCatGetter = computed(() => {
+     const unlockedCats = this.categories().filter(cat => cat.isLocked == false)
+     return unlockedCats
+    })
 
-  mockCategories: CategoryInterface[] = [
-    { id: 1, name: 'Ahorro', percentage: 28.57, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
-    { id: 2, name: 'Emergencia', percentage: 8.57, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
-    { id: 3, name: 'Novia', percentage: 17.14, isLocked: false, assignedAmount: 0, iconName: 'personal' as const },
-    { id: 4, name: 'Gastos Hogar', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'house' as const },
-    { id: 5, name: 'Transporte', percentage: 8.57, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
-    { id: 6, name: 'Gustos propios', percentage: 17.14, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
-  ];
-
-  userCategories: presetCategoryInterface[] = [
+  publicUserCategories: presetCategoryInterface[] = [
     {
       id: 1,
       name: 'Quincena del 15',
@@ -61,26 +81,40 @@ export class BudgetService {
         { id: 5, name: 'Gustos propios', percentage: 30, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
       ]
     }
-  ];
-
-  totalBalance = signal<number>(1);
-  categories = signal<CategoryInterface[]>([
+  ]
+  publicCats: CategoryInterface[] = ([
     { id: 1, name: 'Ahorro', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
     { id: 2, name: 'Emergencia', percentage: 10, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
     { id: 3, name: 'Gastos Hogar', percentage: 25, isLocked: false, assignedAmount: 0, iconName: 'house' as const },
     { id: 4, name: 'Transporte', percentage: 15, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
     { id: 5, name: 'Gustos propios', percentage: 30, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
-
   ]);
 
-  get totalAssigned(): number {
+  totalAssigned = computed(() => {
     return this.categories()
       .reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
-  }
+  })
 
-  get totalPercentage(): number {
-    return Number(this.categories()
-      .reduce((acc, cat) => acc - cat.percentage, 0).toFixed(2)) + 100;
+  totalPercentage = computed(() => {
+    const result = Number(this.categories()
+      .reduce((acc, cat) => acc - cat.percentage, 0).toFixed(2)) + 100
+    return result
+  })
+
+  async distributePercentage(): Promise<void> {
+    const updatedCats = this.categories()
+      .map(cat => {
+        const updatedCategory = cat.isLocked === false ? {
+          ...cat,
+          percentage: cat.percentage + (this.totalPercentage() / this.unlockedCatGetter().length),
+          assignedAmount: (cat.percentage / 100) * this.totalBalance()
+        } : cat;
+        console.log(this.unlockedCatGetter())
+        return updatedCategory;
+      })
+    this.categories.set(updatedCats)
+    const catsToUpload = updatedCats.filter(cats => this.uuidPattern.test(cats.id as string))
+    Promise.all(catsToUpload.map(cat => this.catsRep.update({...cat}, cat.id as string)))
   }
 
   updateTotalAssigned(newTotal: number) {
@@ -96,7 +130,6 @@ export class BudgetService {
   applyPreset(preset: CategoryInterface[]) {
     this.categories.set(preset);
     this.updateTotalAssigned(this.totalBalance());
-    console.table(this.categories());
   }
 
   addCategory(category: CategoryInterface) {
@@ -104,15 +137,4 @@ export class BudgetService {
     this.updateTotalAssigned(this.totalBalance());
   }
 
-  testAlgorithm() {
-    const distributeBudget = (categories: CategoryInterface[], amountToDistribute: number): CategoryInterface[] => {
-      for (let category of categories) {
-        if (!category.isLocked) {
-          category.assignedAmount += this.totalPercentage == 0 ? 0 : (category.percentage / this.totalPercentage) * amountToDistribute;
-        }
-      }
-      return categories;
-    }
-    const resultado = distributeBudget(this.mockCategories, 1000);
-  }
 }

@@ -21,6 +21,7 @@
     <p class="assigned-amount principal place-self-center">${{ assignedAmount | number:'1.0-2' }}</p>
     }
     <div class="flex gap-3 items-center place-self-end col-end-5 col-span-1">
+        @if(!editing){
         @if (isLocked) {
         <button (click)="lockCategory()">
             <app-icon class="icon" [name]="'lock'" />
@@ -29,9 +30,9 @@
         <button (click)="lockCategory()">
             <app-icon class="principal" [name]="'unlock'" />
         </button>
-        }
+        }}
         @if (!isLocked) {
-        <button (click)="inputStyle()">
+        <button (click)="onEditChange()">
             <app-icon class="principal" [name]="'pencil'" />
         </button>
         <button (click)="deleteCategory()">

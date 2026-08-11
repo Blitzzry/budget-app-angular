@@ -6,7 +6,6 @@ import { PresetCard } from '../../shared/components/molecules/preset-card/preset
 import { Topbar } from '../../shared/components/molecules/topbar/topbar';
 import { LogInForm } from '../../shared/components/organisms/auth/log-in-form/log-in-form';
 import { SignUpForm } from '../../shared/components/organisms/auth/sign-up-form/sign-up-form';
-import { App } from '../../app';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
@@ -15,9 +14,7 @@ import { AuthService } from '../../core/services/auth.service';
   imports: [TotalBalance,
     CategoryCard,
     PresetCard,
-    Topbar,
-    LogInForm,
-    SignUpForm
+    Topbar
   ],
   templateUrl: './page.html',
   styleUrl: './page.css',
@@ -25,13 +22,16 @@ import { AuthService } from '../../core/services/auth.service';
 export class Page implements OnInit {
   constructor(public budgetService: BudgetService, private router: Router, public authService: AuthService) {
   }
-  
+
   totalBalance: number = 0;
   goToSignUp() {
     this.router.navigate(["/signUp"])
   }
   goToLogin() {
     this.router.navigate(["/logIn"])
+  }
+  async signOutAction() {
+    await this.authService.signOut()
   }
   
   ngOnInit() {

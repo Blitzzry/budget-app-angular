@@ -5,14 +5,12 @@ import { environment } from '../../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
   private _client: SupabaseClient;
-
   constructor() {
     this._client = createClient(
       environment.supabaseUrl,
       environment.supabaseKey
     );
   }
-
   get client(): SupabaseClient {
     return this._client;
   }

@@ -1,16 +1,19 @@
 <div class="card flex flex-col p-5 w-full max-h-112 justify-between overflow-y-auto">
     <div class="flex items-center space-between gap-4 justify-between">
         <p class="principal text-lg">Mis categorias</p>
-        <input [(ngModel)]="newCategory.name" placeholder="Nombre" class="principal"/>
-        <input [(ngModel)]="newCategory.percentage" type=number placeholder="Porcentaje" class="principal"/>
+        <input [(ngModel)]="newCategory.name" placeholder="Nombre" class="principal" />
+        <input [(ngModel)]="newCategory.percentage" type=number placeholder="Porcentaje" class="principal" />
         <button (click)="addCategory()" class="ml-2 text-btn">
-            <app-icon  name="plus" [size]="'xxs'"></app-icon>
+            <app-icon name="plus" [size]="'xxs'"></app-icon>
             Agregar categoria
         </button>
+        <button (click)="budgetService.distributePercentage()">Distribuir Porcentaje</button>
     </div>
     <div class="flex flex-col mt-2">
         @for (item of budgetService.categories(); track $index) {
-            <app-category [categoryName]="item.name" [iconName]="item.iconName" [assignedAmount]="item.assignedAmount" [percentage]="item.percentage" [id]="item.id" (edit)="onEditCategory($event)" (remove)="removeCategory($event)" (lock)="lockCategory($event)"/>
+        <app-category [categoryName]="item.name" [iconName]="item.iconName" [assignedAmount]="item.assignedAmount"
+            [percentage]="item.percentage" [id]="item.id" (edit)="editCategory($event)"
+            (remove)="removeCategory($event)" (lock)="lockCategory($event)" />
         }
     </div>
 </div>
