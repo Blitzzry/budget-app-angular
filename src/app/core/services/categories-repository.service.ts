@@ -39,14 +39,13 @@ export class CategoriesRepository {
         if (error) throw error;
         return (data ?? []).map((row: CategoryRow) => this.mapToCategory(row));
     }
-    async create(category: Omit<CategoryInterface, 'id'>): Promise<CategoryInterface> {
+    async create(category: Omit<CategoryInterface, 'id' | 'assigned_amount'>): Promise<CategoryInterface> {
         const { data, error } = await this.supabaseService.client
             .from('categories')
             .insert({
                 name: category.name,
                 percentage: category.percentage,
                 locked: category.isLocked,
-                assigned_amount: category.assignedAmount,
                 icon_name: category.iconName,
             })
             .select()

@@ -42,9 +42,13 @@ export class CategoryCard {
     );
   }
 
-  removeCategory(categoryId: string | number) {
+  async removeCategory(categoryId: string | number) {
+    if (this.authService.userIsLoggedIn()) {
+      if (this.budgetService.uuidPattern.test(categoryId as string)) {
+        await this.categoriesRepo.delete(categoryId as string);
+      }
     this.budgetService.categories.update(cats => cats.filter(cat => cat.id !== categoryId));
-  }
+  }}
 
   addCategory() {
     this.budgetService.addCategory({ ...this.newCategory });

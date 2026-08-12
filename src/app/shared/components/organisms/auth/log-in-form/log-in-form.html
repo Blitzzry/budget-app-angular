@@ -1,21 +1,24 @@
 <div class="auth-card flex items-center justify-center flex-col gap-2 mt-6">
     <h1 class="text-3xl my-4 main-title font-semibold text-gray-800">Getter</h1>
     <span class="text-2xl font-bold text-white">Bienvenido de vuelta!</span>
-    <span class="text-sm secundary mb-5">Logueate para continuar con tu presupuesto</span>
-    <div class="flex flex-col w-full gap-1.5">
+    <span class="text-sm secundary mb-3">Logueate para continuar con tu presupuesto</span>
+    <form (ngSubmit)="logIn(email, password)" class="flex flex-col w-full gap-1.5">
         <span class="text-sm text-white">Correo electrónico</span>
-        <input class="auth-input" type="email" placeholder="tucorreo@email.com" [(ngModel)]="email" />
+        <input class="auth-input" type="email" [(ngModel)]="email" name="email" autocomplete="email" />
         <span class="text-sm text-white">Contraseña</span>
-        <input class="auth-input" type="password" placeholder="..." [(ngModel)]="password" />
-        <div class="flex my-4 justify-between">
+        <input class="auth-input" type="password" [(ngModel)]="password" name="password" autocomplete="current-password" />
+        @if (incInfo()) {
+        <span class="error mt-2">Información incorrecta!</span>
+        }
+        <div class="flex my-2 justify-between">
             <label class="flex items-center gap-1.5 text-sm" style="color:#5C554C;">
-                <input [(ngModel)]="rememberMe" type="checkbox" style="width:14px;height:14px;accent-color:#C4A86A;" />
+                <input [(ngModel)]="rememberMe" name="rememberMe" type="checkbox" style="width:14px;height:14px;accent-color:#C4A86A;" />
                 Recuérdame
             </label>
             <button class="text-sm text-gray-600 hover:underline mt-1">¿Olvidaste tu contraseña?</button>
         </div>
-        <button class="log-in-btn my-2" (click)="logIn(email, password)">Ingresar!</button>
-    </div>
+        <button type="submit" class="log-in-btn my-2">Log in!</button>
+    </form>
     <div class="flex flex-col gap-2 items-center w-full">
         <span class="text-sm mt-1 mb-2 secundary">¿No tienes una cuenta?
             <a href="#" routerLink="/signUp" class="sign-up-btn hover:underline">Regístrate</a></span>

@@ -21,12 +21,16 @@ export class BudgetService {
               cats.map(cat => ({
                 ...cat,
                 assignedAmount: (cat.percentage / 100) * this.totalBalance()
-              }))
-            ); this.userCategories.set(this.publicUserCategories)
+              })));
+              this.userCategories.set(this.publicUserCategories)
           } else {
-            Promise.all(this.publicCats.map((cat) => this.catsRep.create(cat)))
-              .then((createdCategories) => {
-                this.categories.set(createdCategories)
+            Promise.all(this.publicCats.map(cat => {
+              cat.assignedAmount = (cat.percentage / 100) * this.totalBalance(),
+              this.catsRep.create(cat)
+              return cat
+            }))
+              .then((createdCats) => {
+                this.categories.set(createdCats)
               })
           }
         });
@@ -109,7 +113,6 @@ export class BudgetService {
           percentage: cat.percentage + (this.totalPercentage() / this.unlockedCatGetter().length),
           assignedAmount: (cat.percentage / 100) * this.totalBalance()
         } : cat;
-        console.log(this.unlockedCatGetter())
         return updatedCategory;
       })
     this.categories.set(updatedCats)

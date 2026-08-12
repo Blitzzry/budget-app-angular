@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../../core/services/auth.service';
@@ -17,17 +17,15 @@ export class LogInForm {
   rememberMe: boolean = false;
   name: string = '';
   email: string = '';
+  incInfo = signal<boolean>(false)
   password: string = '';
   confirmPassword: string = "";
-  signUp() {
-  }
   async logIn(email: string, password: string) {
     try {
-      const result = this.authService.signIn(email, password)
-
+      await this.authService.signIn(email, password)
       this.router.navigate(['']) 
     } catch (error) {
-      console.error(error);
+      this.incInfo.set(true)
     }
   }
 }

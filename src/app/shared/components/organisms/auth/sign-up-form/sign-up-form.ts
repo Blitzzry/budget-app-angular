@@ -15,16 +15,20 @@ export class SignUpForm {
   name: string = '';
   email: string = '';
   password: string = '';
+  passwInc: boolean = false
+
   confirmPassword: string = "";
   terms: boolean = false;
-  signUp(email: string, password: string, confirmPassword: string, name: string, terms: boolean) {
-    if (password == confirmPassword && terms == true) {
-      this.authService.signUp(name, email, password)
-      this.router.navigate([''])
-    } else {
-      throw console.error();
+  async signUp(email: string, password: string, confirmPassword: string, name: string, terms: boolean) {
+    try {
+      if (password == confirmPassword) {
+        await this.authService.signUp(name, email, password)
+        this.router.navigate([''])
+      } else {
+        this.passwInc = true
+      }
+    } catch (error) {
+      console.log(error)
     }
-  }
-  signIn() {
   }
 }

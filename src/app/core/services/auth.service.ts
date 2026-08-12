@@ -37,6 +37,5 @@ export class AuthService {
         const { error } = await this.supabaseService.client.auth.signOut();
         if (error) throw error;
         this.currentUser.set(null);
-        console.log('a')
     }
 }
