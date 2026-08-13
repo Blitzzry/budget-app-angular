@@ -46,11 +46,13 @@ export class CategoryCard {
     if (this.authService.userIsLoggedIn()) {
       if (this.budgetService.uuidPattern.test(categoryId as string)) {
         await this.categoriesRepo.delete(categoryId as string);
+        console.log('ej')
       }
+    }
     this.budgetService.categories.update(cats => cats.filter(cat => cat.id !== categoryId));
-  }}
+  }
 
-  addCategory() {
+  async addCategory() {
     this.budgetService.addCategory({ ...this.newCategory });
     this.newCategory = {
       id: crypto.randomUUID(),

@@ -60,7 +60,7 @@ export class CategoriesRepository {
             .update(this.mapToRow(changes))
             .eq('id', id)
             .select()
-            .single()
+            .maybeSingle()
         if (error) throw error;
         return this.mapToCategory(data as CategoryRow);
     }

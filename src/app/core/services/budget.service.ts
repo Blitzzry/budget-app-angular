@@ -135,7 +135,13 @@ export class BudgetService {
     this.updateTotalAssigned(this.totalBalance());
   }
 
-  addCategory(category: CategoryInterface) {
+  async addCategory(category: CategoryInterface) {
+    if (this.authService.userIsLoggedIn()) {
+      if (this.uuidPattern.test(category.id as string)) {
+        console.log(category)
+        await this.catsRep.create( category );
+      }
+    }
     this.categories.update(cats => [...cats, category]);
     this.updateTotalAssigned(this.totalBalance());
   }
