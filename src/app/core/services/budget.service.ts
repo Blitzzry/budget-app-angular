@@ -111,11 +111,14 @@ export class BudgetService {
         const updatedCategory = cat.isLocked === false ? {
           ...cat,
           percentage: cat.percentage + (this.totalPercentage() / this.unlockedCatGetter().length),
-          assignedAmount: (cat.percentage / 100) * this.totalBalance()
         } : cat;
         return updatedCategory;
       })
-    this.categories.set(updatedCats)
+    this.categories.set(updatedCats.map(cat => 
+      {const updatedAmount = {...cat,
+      assignedAmount: (cat.percentage / 100) * this.totalBalance()}
+      return updatedAmount
+  }))
     const catsToUpload = updatedCats.filter(cats => this.uuidPattern.test(cats.id as string))
     Promise.all(catsToUpload.map(cat => this.catsRep.update({...cat}, cat.id as string)))
   }
