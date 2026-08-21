@@ -8,13 +8,15 @@ import { LogInForm } from '../../shared/components/organisms/auth/log-in-form/lo
 import { SignUpForm } from '../../shared/components/organisms/auth/sign-up-form/sign-up-form';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { CreateDistributeCat } from '../../shared/components/molecules/create-distribute-cat/create-distribute-cat';
 
 @Component({
   selector: 'app-page',
   imports: [TotalBalance,
     CategoryCard,
     PresetCard,
-    Topbar
+    Topbar,
+    CreateDistributeCat
   ],
   templateUrl: './page.html',
   styleUrl: './page.css',

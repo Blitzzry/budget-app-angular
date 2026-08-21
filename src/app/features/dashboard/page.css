@@ -1,2 +1,12 @@
+.total-presets {
+    display: flex;
+    flex-direction: column;
+}
 
-
+@media (min-width: 768px) {
+    .total-presets {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: repeat(1, minmax(0, 1fr));
+    }
+}

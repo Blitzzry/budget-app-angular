@@ -29,7 +29,6 @@ html, body {
 }
 
 button {
-    width: auto;
     height: auto;
     padding: 6px 12px;
     gap: 4px;

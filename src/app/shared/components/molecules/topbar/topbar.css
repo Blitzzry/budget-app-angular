@@ -50,3 +50,21 @@
     transform: translateY(-1px);
     box-shadow: 0 10px 25px rgba(212, 175, 122, .25);
 }
+
+.desktop {
+    display: none;
+}
+
+.mobile {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .desktop {
+        display: flex;
+    }
+
+    .mobile {
+        display: none;
+    }
+}

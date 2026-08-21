@@ -22,11 +22,11 @@ export class BudgetService {
                 ...cat,
                 assignedAmount: (cat.percentage / 100) * this.totalBalance()
               })));
-              this.userCategories.set(this.publicUserCategories)
+            this.userCategories.set(this.publicUserCategories)
           } else {
             Promise.all(this.publicCats.map(cat => {
               cat.assignedAmount = (cat.percentage / 100) * this.totalBalance(),
-              this.catsRep.create(cat)
+                this.catsRep.create(cat)
               return cat
             }))
               .then((createdCats) => {
@@ -39,15 +39,17 @@ export class BudgetService {
   }
 
   monthlyDifference: number = 0;
+  windowWidth = signal<number>(window.innerWidth);
   userCategories = signal<presetCategoryInterface[]>([]);
   categories = signal<CategoryInterface[]>([])
   totalBalance = signal<number>(1);
   uiConfig = signal<any>(null);
+
   uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
   unlockedCatGetter = computed(() => {
-     const unlockedCats = this.categories().filter(cat => cat.isLocked == false)
-     return unlockedCats
-    })
+    const unlockedCats = this.categories().filter(cat => cat.isLocked == false)
+    return unlockedCats
+  })
 
   publicUserCategories: presetCategoryInterface[] = [
     {
@@ -94,6 +96,10 @@ export class BudgetService {
     { id: 5, name: 'Gustos propios', percentage: 30, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
   ]);
 
+  windowResizer = computed(() => {
+    return this.windowWidth.set(window.innerWidth)
+  })
+
   totalAssigned = computed(() => {
     return this.categories()
       .reduce((acc, cat) => acc + (cat.assignedAmount || 0), 0);
@@ -114,13 +120,15 @@ export class BudgetService {
         } : cat;
         return updatedCategory;
       })
-    this.categories.set(updatedCats.map(cat => 
-      {const updatedAmount = {...cat,
-      assignedAmount: (cat.percentage / 100) * this.totalBalance()}
+    this.categories.set(updatedCats.map(cat => {
+      const updatedAmount = {
+        ...cat,
+        assignedAmount: (cat.percentage / 100) * this.totalBalance()
+      }
       return updatedAmount
-  }))
+    }))
     const catsToUpload = updatedCats.filter(cats => this.uuidPattern.test(cats.id as string))
-    Promise.all(catsToUpload.map(cat => this.catsRep.update({...cat}, cat.id as string)))
+    Promise.all(catsToUpload.map(cat => this.catsRep.update({ ...cat }, cat.id as string)))
   }
 
   updateTotalAssigned(newTotal: number) {
@@ -142,7 +150,7 @@ export class BudgetService {
     if (this.authService.userIsLoggedIn()) {
       if (this.uuidPattern.test(category.id as string)) {
         console.log(category)
-        await this.catsRep.create( category );
+        await this.catsRep.create(category);
       }
     }
     this.categories.update(cats => [...cats, category]);

@@ -1,5 +1,5 @@
 .icon {
-    color: rgb(74, 222, 128)
+  color: rgb(74, 222, 128)
 }
 
 .input {
@@ -9,4 +9,30 @@
   padding: 4px 6px;
   border-radius: 6px;
   min-width: 10px;
+}
+
+.cats-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cats-btns {
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  .cats-info {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(1, minmax(0, 1fr));
+    width: 100%;
+    margin-left: 12px;
+  }
+
+  .cats-btns {
+    grid-column-end: 5;
+    place-self: end;
+    flex-direction: row;
+    grid-column: span 1 / span 1;
+  }
 }
