@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { CategoryInterface } from '../../../../core/models/category.model';
 import { Icon } from '../../atoms/icon/icon';
+import { AuthService } from '../../../../core/services/auth.service';
+
 
 @Component({
   selector: 'app-preset-card',
@@ -10,9 +12,9 @@ import { Icon } from '../../atoms/icon/icon';
   styleUrl: './preset-card.css',
 })
 export class PresetCard {
-  constructor(public budgetService: BudgetService) { }
-  preset: CategoryInterface[] = [];
-  applyPreset(preset: CategoryInterface[]) {
-    this.budgetService.applyPreset(preset);
+  constructor(public budgetService: BudgetService, public authService: AuthService) {
+  }
+  applyPreset(savedPreset: CategoryInterface[]) {
+    this.budgetService.applyPreset(savedPreset);
   }
 }

@@ -54,6 +54,11 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "allowedHosts": [
+              "murkiness-boxing-disarray.ngrok-free.dev"
+            ]
+          },
           "configurations": {
             "production": {
               "buildTarget": "budget-app-pro:build:production"

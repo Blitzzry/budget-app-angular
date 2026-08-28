@@ -54,30 +54,6 @@ export class BudgetService {
   publicUserCategories: presetCategoryInterface[] = [
     {
       id: 1,
-      name: 'Quincena del 15',
-      categories: [
-        { id: 1, name: 'Ahorro', percentage: 15, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
-        { id: 2, name: 'Emergencia', percentage: 8, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
-        { id: 3, name: 'Gastos Hogar', percentage: 25, isLocked: false, assignedAmount: 0, iconName: 'house' as const },
-        { id: 4, name: 'Transporte', percentage: 12, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
-        { id: 5, name: 'Citas Pareja', percentage: 17, isLocked: false, assignedAmount: 0, iconName: 'personal' as const },
-        { id: 6, name: 'Gustos propios', percentage: 23, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
-      ]
-    },
-    {
-      id: 2,
-      name: 'Quincena del 30',
-      categories: [
-        { id: 1, name: 'Ahorro', percentage: 23, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
-        { id: 2, name: 'Emergencia', percentage: 10, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
-        { id: 3, name: 'Gastos Hogar', percentage: 17, isLocked: false, assignedAmount: 0, iconName: 'house' as const },
-        { id: 4, name: 'Transporte', percentage: 9, isLocked: false, assignedAmount: 0, iconName: 'transport' as const },
-        { id: 5, name: 'Citas Pareja', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'personal' as const },
-        { id: 6, name: 'Gustos propios', percentage: 21, isLocked: false, assignedAmount: 0, iconName: 'entertainment' as const }
-      ]
-    },
-    {
-      id: 3,
       name: 'Presupuesto Básico',
       categories: [
         { id: 1, name: 'Ahorro', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
@@ -141,20 +117,23 @@ export class BudgetService {
     );
   }
 
-  applyPreset(preset: CategoryInterface[]) {
-    this.categories.set(preset);
+  applyPreset(savedPreset: CategoryInterface[]) {
+    this.categories.set(savedPreset);
     this.updateTotalAssigned(this.totalBalance());
+  }
+
+  async savePreset(preset: CategoryInterface[]) {
+    const presetUUID: string = crypto.randomUUID()
+    await this.catsRep.createPreset(presetUUID, preset)
   }
 
   async addCategory(category: CategoryInterface) {
     if (this.authService.userIsLoggedIn()) {
       if (this.uuidPattern.test(category.id as string)) {
-        console.log(category)
         await this.catsRep.create(category);
       }
     }
     this.categories.update(cats => [...cats, category]);
     this.updateTotalAssigned(this.totalBalance());
   }
-
 }

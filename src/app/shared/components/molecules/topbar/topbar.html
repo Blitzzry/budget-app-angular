@@ -1,26 +1,21 @@
 @if (isUserLogged) {
-<div class="w-full card px-8 flex items-center justify-between">
+<div class="w-full card px-5 md:px-8 flex items-center justify-between">
     <h1 class="logo"> Getter </h1>
-    @if (budgetService.windowWidth() <= 768){
-    <div>
-        <app-icon [name]="'personal'">
-
-        </app-icon>
-    </div>
-    } @else {
-    <div class="flex items-center gap-4">
-        <span class="principal">{{ userName }}</span>
+    @if (budgetService.windowWidth() <= 768){ <div>
         <button (click)="signOutClick.emit()" class="login-btn">Cerrar sesión</button>
-    </div>
-    }
 </div>
 } @else {
-<div class="w-full card px-8 flex items-center justify-between">
+<div class="flex items-center gap-4">
+    <span class="principal">{{ userName }}</span>
+    <button (click)="signOutClick.emit()" class="login-btn">Cerrar sesión</button>
+</div>
+}
+</div>
+} @else {
+<div class="w-full card px-5 md:px-8 flex items-center justify-between">
     <h1 class="logo"> Getter </h1>
     <div class="mobile">
-        <button>
-            X
-        </button>
+        <button (click)="loginClick.emit()" class="login-btn">Inicia sesión</button>
     </div>
     <div class="desktop flex items-center gap-4">
         <button (click)="loginClick.emit()" class="login-btn">Inicia sesión</button>

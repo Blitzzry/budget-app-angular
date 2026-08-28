@@ -54,7 +54,7 @@ export class Category implements OnInit, OnChanges {
     const total = this.budgetService.totalBalance();
     if (input.id === 'percentage') {
       const cleanString = input.value.replace(/[^\d,.]/g, '')
-      let newPercentage = Number(cleanString.replace(/\./g, '').replace(',', '.'));
+      let newPercentage = Number(cleanString);
       input.value = newPercentage.toString()
       if (newPercentage > 100) {
         newPercentage = 100

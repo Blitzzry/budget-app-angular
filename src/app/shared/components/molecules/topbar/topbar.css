@@ -14,32 +14,30 @@
 
 .login-btn {
     border: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 8px 25px;
     background: transparent;
+    font-size: 14px;
+    padding: 5px 18px;
     color: rgb(212, 175, 122);
     font-family: "Inter", sans-serif;
-    font-size: 15px;
     font-weight: 500;
     cursor: pointer;
     transition: .25s;
 }
 
 .login-btn:hover {
-
     background: rgba(212, 175, 122, .08);
-
     box-shadow:
         0 0 20px rgba(212, 175, 122, .15);
 }
 
 .register-btn {
-    padding: 8px 30px;
+    font-size: 14px;
+    padding: 5px 18px;
     border: none;
     border-radius: 14px;
     background: rgb(212, 175, 122);
     color: rgb(17, 24, 39);
     font-family: "Inter", sans-serif;
-    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     transition: .25s;
@@ -66,5 +64,15 @@
 
     .mobile {
         display: none;
+    }
+
+    .login-btn {
+        padding: 8px 25px;
+        font-size: 15px;
+    }
+
+    .register-btn {
+        padding: 8px 30px;
+        font-size: 15px;
     }
 }

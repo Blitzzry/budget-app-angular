@@ -3,7 +3,7 @@
         [isUserLogged]="authService.userIsLoggedIn()"
         [userName]="authService.currentUser()?.user_metadata?.['name']"></app-topbar>
     <h1 class="text-2xl ml-4 main-title">{{ budgetService.uiConfig()?.appName }}</h1>
-    <div class="total-presets gap-4 mt-4 mx-4">
+    <div class="total-presets gap-4 mt-4 md:mx-4">
         <app-total-balance class="h-full" />
         <app-preset-card class="h-full" />
         <app-create-distribute-cat></app-create-distribute-cat>
