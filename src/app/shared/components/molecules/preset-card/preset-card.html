@@ -1,18 +1,25 @@
 <div class="card p-5 w-full flex flex-col">
     <div class="flex justify-between mb-1">
         <p class="principal text-lg main-title font-bold">Presets</p>
-        @if(authService.userIsLoggedIn()){
+        @if(authService.userIsLoggedIn() && budgetService.userPresets().length <= 5){
         <button class="text-sm" (click)="budgetService.savePreset(budgetService.categories())">Guardar preset</button>
         }
     </div>
     <div class="flex flex-col mt-2 gap-3 overflow-y-auto overflow-x-hidden max-h-40">
-        @for (item of this.budgetService.userCategories(); track $index) {
+        @for (item of this.presetList(); track $index) {
         <div class="flex items-center preset-category justify-between p-2 rounded-md">
-            <p class="principal">{{ item.name }}</p>
-            <button (click)="applyPreset(item.categories)" class="text-btn">
-                <app-icon name="plus" [size]="'xxs'"></app-icon>
-                <p class="text-sm">Usar</p>
-            </button>
+            <p class="principal">{{ item.preset_name }}</p>
+            <div class="flex gap-1">
+                @if (authService.userIsLoggedIn()){
+                <button (click)="budgetService.deletePreset(item.preset_id)">
+                    <app-icon class="principal" [name]="'trash'" />
+                </button>
+                }
+                <button (click)="applyPreset(item.categories)" class="text-btn">
+                    <app-icon name="plus" [size]="'xxs'"></app-icon>
+                    <p class="text-sm">Usar</p>
+                </button>
+            </div>
         </div>
         }
     </div>

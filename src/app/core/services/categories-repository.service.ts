@@ -32,13 +32,22 @@ export class CategoriesRepository {
         };
         return row;
     }
-    async getAll(): Promise<CategoryInterface[]> {
+    async getAllCats(): Promise<CategoryInterface[]> {
         const { data, error } = await this.supabaseService.client
             .from('categories')
             .select('*');
         if (error) throw error;
         return (data ?? []).map((row: CategoryRow) => this.mapToCategory(row));
     }
+
+    async getAllPresets(): Promise<presetCategoryInterface[]> {
+        const { data, error } = await this.supabaseService.client
+            .from('preset_cats')
+            .select('*')
+        if (error) throw error;
+        return (data ?? [])
+    }
+
     async create(category: Omit<CategoryInterface, 'id' | 'assigned_amount'>): Promise<CategoryInterface> {
         const { data, error } = await this.supabaseService.client
             .from('categories')
@@ -56,36 +65,36 @@ export class CategoriesRepository {
     }
     async update(changes: Partial<Omit<CategoryInterface, 'assignedAmount'>>, id: string): Promise<CategoryInterface> {
         const { data, error } = await this.supabaseService.client
-        .from('categories')
-        .update(this.mapToRow(changes))
-        .eq('id', id)
-        .select()
-        .maybeSingle()
+            .from('categories')
+            .update(this.mapToRow(changes))
+            .eq('id', id)
+            .select()
+            .maybeSingle()
         if (error) throw error;
         return this.mapToCategory(data as CategoryRow);
     }
-    async delete(id: string): Promise<void> {
+    async deleteCat(id: string): Promise<void> {
         const { error } = await this.supabaseService.client
-        .from('categories')
-        .delete()
-        .eq('id', id)
+            .from('categories')
+            .delete()
+            .eq('id', id)
         if (error) throw error;
     }
-    async updatePreset(changes: Partial<presetCategoryInterface>, id: string): Promise<CategoryInterface> {
-        const { data, error } = await this.supabaseService.client
-        .from('preset_cats')
-        .update(this.mapToRow(changes))
-        .eq('id', id)
-        .select()
-        .maybeSingle()
+
+    async deletePreset(id: string): Promise<void> {
+        const { error } = await this.supabaseService.client
+            .from('preset_cats')
+            .delete()
+            .eq('preset_id', id)
         if (error) throw error;
-        return this.mapToCategory(data as CategoryRow);
     }
-    async createPreset(presetId: string, category: CategoryInterface[]): Promise<CategoryInterface> {
+
+    async createPreset(presetId: string, preset_name: string, category: CategoryInterface[]): Promise<presetCategoryInterface[]> {
         const { data, error } = await this.supabaseService.client
             .from('preset_cats')
             .insert({
                 preset_id: presetId,
+                preset_name: preset_name,
                 categories: category,
             })
             .select()

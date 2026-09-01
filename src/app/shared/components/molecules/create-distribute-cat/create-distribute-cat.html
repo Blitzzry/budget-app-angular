@@ -2,13 +2,14 @@
     <div class="flex flex-col gap-2 w-full">
         <input [(ngModel)]="newCategory.name" placeholder="Nombre" class="principal" />
         <input [(ngModel)]="newCategory.percentage" type=number placeholder="Porcentaje" class="principal" />
-        <input [(ngModel)]="newCategory.assignedAmount" type=number placeholder="Porcentaje" class="principal" />
     </div>
     <div class="flex flex-col w-full gap-3">
-        <button (click)="addCategory()" class="text-btn w-full">
-            <app-icon name="plus" [size]="'xxs'"></app-icon>
-            Agregar categoria
-        </button>
+        @if (budgetService.categories().length <= 13){
+            <button (click)="addCategory()" class="text-btn w-full">
+                <app-icon name="plus" [size]="'xxs'"></app-icon>
+                Agregar categoria
+            </button>
+        }
         <button (click)="budgetService.distributePercentage()" class="w-full">Distribuir Porcentaje</button>
     </div>
 </div>

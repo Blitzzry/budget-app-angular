@@ -10,8 +10,8 @@ export interface CategoryInterface {
 
 
 export interface presetCategoryInterface {
-    id: string | number;
-    name: string;
+    preset_id: string;
+    preset_name: string;
     categories: CategoryInterface[];
 }
 

@@ -12,9 +12,15 @@ export class BudgetService {
     effect(() => {
       if (this.authService.userIsLoggedIn() == false) {
         this.categories.set(this.publicCats)
-        this.userCategories.set(this.publicUserCategories)
+        this.userPresets.set(this.publicPreset)
       } else {
-        this.catsRep.getAll().then((categories) => {
+        this.catsRep.getAllPresets().then((savedArrPresets) => {
+          savedArrPresets.map((savedPreset) => {
+            console.log(savedPreset)
+            this.userPresets.update(presets => [...presets, savedPreset])
+          })
+        })
+        this.catsRep.getAllCats().then((categories) => {
           if (categories.length !== 0) {
             this.categories.set(categories)
             this.categories.update(cats =>
@@ -22,7 +28,6 @@ export class BudgetService {
                 ...cat,
                 assignedAmount: (cat.percentage / 100) * this.totalBalance()
               })));
-            this.userCategories.set(this.publicUserCategories)
           } else {
             Promise.all(this.publicCats.map(cat => {
               cat.assignedAmount = (cat.percentage / 100) * this.totalBalance(),
@@ -40,7 +45,7 @@ export class BudgetService {
 
   monthlyDifference: number = 0;
   windowWidth = signal<number>(window.innerWidth);
-  userCategories = signal<presetCategoryInterface[]>([]);
+  userPresets = signal<presetCategoryInterface[]>([]);
   categories = signal<CategoryInterface[]>([])
   totalBalance = signal<number>(1);
   uiConfig = signal<any>(null);
@@ -51,10 +56,10 @@ export class BudgetService {
     return unlockedCats
   })
 
-  publicUserCategories: presetCategoryInterface[] = [
+  publicPreset: presetCategoryInterface[] = [
     {
-      id: 1,
-      name: 'Presupuesto Básico',
+      preset_id: '1',
+      preset_name: 'Presupuesto Básico',
       categories: [
         { id: 1, name: 'Ahorro', percentage: 20, isLocked: false, assignedAmount: 0, iconName: 'savings' as const },
         { id: 2, name: 'Emergencia', percentage: 10, isLocked: false, assignedAmount: 0, iconName: 'health' as const },
@@ -88,6 +93,7 @@ export class BudgetService {
   })
 
   async distributePercentage(): Promise<void> {
+    console.log(this.categories().length)
     const updatedCats = this.categories()
       .map(cat => {
         const updatedCategory = cat.isLocked === false ? {
@@ -123,8 +129,20 @@ export class BudgetService {
   }
 
   async savePreset(preset: CategoryInterface[]) {
+    console.log(preset)
     const presetUUID: string = crypto.randomUUID()
-    await this.catsRep.createPreset(presetUUID, preset)
+    const newPreset: presetCategoryInterface = {preset_id: presetUUID,
+      preset_name: `Preset ${this.userPresets().length + 1}`,
+      categories: preset
+    }
+    this.userPresets.update(presets => [...presets, newPreset])
+    await this.catsRep.createPreset(presetUUID, `Preset ${this.userPresets().length + 1}`, preset)
+  }
+
+  async deletePreset(presetId: string) {
+    console.log(presetId)
+    await this.catsRep.deletePreset(presetId)
+    this.userPresets.update(presets => presets.filter(preset => preset.preset_id !== presetId));
   }
 
   async addCategory(category: CategoryInterface) {

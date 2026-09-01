@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { CategoryInterface } from '../../../../core/models/category.model';
 import { Icon } from '../../atoms/icon/icon';
@@ -14,7 +14,12 @@ import { AuthService } from '../../../../core/services/auth.service';
 export class PresetCard {
   constructor(public budgetService: BudgetService, public authService: AuthService) {
   }
+  presetList = computed (() => {
+    return this.budgetService.userPresets()
+  })
+
   applyPreset(savedPreset: CategoryInterface[]) {
+    console.log(savedPreset)
     this.budgetService.applyPreset(savedPreset);
   }
 }
